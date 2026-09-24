@@ -115,18 +115,6 @@ export default function EditionsSection() {
                     
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
 
-                    {/* Top Right Date Tag */}
-                    <motion.div 
-                      key={`date-${edition.id}`}
-                      initial={{ opacity: 0, y: -6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4 }}
-                      className="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-md border border-[#dcb45e]/30 text-[#dcb45e] text-[10px] font-mono"
-                    >
-                      <Calendar className="w-3 h-3 text-[#dcb45e]" />
-                      <span>{edition.date}</span>
-                    </motion.div>
-
                     {/* Bottom Left Location Pill */}
                     <motion.div 
                       key={`city-${edition.id}`}
