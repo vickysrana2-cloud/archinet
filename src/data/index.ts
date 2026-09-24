@@ -134,30 +134,39 @@ export interface Testimonial {
 export const TESTIMONIALS_DATA: Testimonial[] = [
   {
     id: "test-1",
-    quote: "ArchiNet Summit is unequivocally the finest architectural congregation in Asia. The level of dialogue and curated networking is unmatched.",
-    author: "Rahul Mehrotra",
-    title: "Professor of Urban Design",
-    company: "Harvard GSD / RMA Architects",
+    quote: "Working with Archinet transformed our network. Their strategic insights improved our operations and boosted our overall efficiency. We saw a 30% increase in meaningful connections within six months!",
+    author: "AR. KHOZEMA CHITALWALA",
+    title: "PRINCIPAL ARCHITECT",
+    company: "DESIGN MATRIX",
     rating: 5,
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop"
   },
   {
     id: "test-2",
-    quote: "An extraordinary convergence of visionary architects, structural innovators, and top-tier luxury brands under one pristine roof.",
-    author: "Anju Mallavardhi",
-    title: "Managing Director",
-    company: "Studio Prestige Design",
+    quote: "The curated environment is engineered for absolute focus of conversation and bespoke dialogue at Archinet is simply in the entire industry.",
+    author: "ID. SONIA PODDAR",
+    title: "LEAD INTERIOR DESIGNER",
+    company: "STUDIO PODDAR",
     rating: 5,
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop"
+    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop"
   },
   {
     id: "test-3",
-    quote: "The curated 1-on-1 format provided our brand with unprecedented access to decision-makers shaping major skyscraper projects.",
-    author: "Vikram Kirloskar",
-    title: "Regional Director",
-    company: "Modular Façade Solutions",
+    quote: "ArchiNet Summit is unequivocally the finest architectural congregation in Asia. The level of dialogue and curated networking is unmatched.",
+    author: "AR. SANJAY PURI",
+    title: "PRINCIPAL ARCHITECT",
+    company: "SANJAY PURI ARCHITECTS",
     rating: 5,
-    avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=200&auto=format&fit=crop"
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop"
+  },
+  {
+    id: "test-4",
+    quote: "An extraordinary convergence of visionary architects, structural innovators, and top-tier luxury brands under one pristine roof.",
+    author: "AR. MANIT RASTOGI",
+    title: "FOUNDER PRINCIPAL",
+    company: "MORPHOGENESIS",
+    rating: 5,
+    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&auto=format&fit=crop"
   }
 ];
 
