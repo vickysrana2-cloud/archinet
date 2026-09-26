@@ -78,7 +78,7 @@ export default function BrandsSection() {
       </div>
 
       {/* Dual Row Continuous Infinite Marquee Ticker */}
-      <div className="w-full bg-[#050505] py-7 sm:py-9 border-y border-white/10 relative overflow-hidden flex flex-col gap-6 sm:gap-8">
+      <div className="w-full bg-[#050505] py-7 sm:py-9 relative overflow-hidden flex flex-col gap-6 sm:gap-8">
         
         {/* Left & Right Gradient Fade Vignettes */}
         <div className="absolute left-0 top-0 bottom-0 w-24 sm:w-44 z-20 bg-gradient-to-r from-[#050505] to-transparent pointer-events-none" />

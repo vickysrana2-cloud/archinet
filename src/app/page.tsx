@@ -21,7 +21,7 @@ import Footer from '../components/layout/Footer';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#070707] text-[#f5f2eb] selection:bg-[var(--accent-gold)] selection:text-[#070707]">
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden relative bg-[#070707] text-[#f5f2eb] selection:bg-[var(--accent-gold)] selection:text-[#070707]">
       <Header />
       <main>
         {/* Old Hero Section preserved in comments: */}

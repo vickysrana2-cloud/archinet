@@ -61,7 +61,7 @@ export default function LeadersSection() {
         </ScrollReveal>
 
         {/* Mobile View: Coverflow Carousel with Left & Right Side Cards Peek & Arrows */}
-        <div className="block lg:hidden w-full">
+        <div className="block lg:hidden w-full overflow-hidden">
           <div className="relative w-full flex items-center justify-center min-h-[420px]">
             
             {/* Left Floating Arrow Button */}
