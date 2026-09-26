@@ -70,7 +70,7 @@ export default function AboutSection() {
 
           <RevealItem variants={fadeRight}>
             <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed font-sans">
-              ArchiNet Summit is a curated luxury architectural network designed to unite leading global design minds, principal architects, and luxury interior brand innovators. We cultivate bespoke design dialogue, strategic partnerships, and structural mastery.
+              We curate premium industry experiences that bring together leading architects, interior designers, developers, and forward-thinking brands. Every Archinet experience is designed to create meaningful conversations, strengthen professional relationships, and open doors to new opportunities.
             </p>
           </RevealItem>
 
@@ -79,13 +79,13 @@ export default function AboutSection() {
             <RevealItem variants={cardReveal} className="p-4 rounded-xl bg-[#0d0d0d] border border-[rgba(255,255,255,0.08)]">
               <Sparkles className="w-5 h-5 text-[var(--accent-gold)] mb-2" />
               <h3 className="font-serif text-lg text-white font-medium mb-1">CURATED NETWORK</h3>
-              <p className="text-xs font-mono text-[var(--text-muted)]">By-invitation matrix of principal partners & decision makers.</p>
+              <p className="text-xs font-mono text-[var(--text-muted)]">We create an environment where the industry’s most relevant people.</p>
             </RevealItem>
 
             <RevealItem variants={cardReveal} className="p-4 rounded-xl bg-[#0d0d0d] border border-[rgba(255,255,255,0.08)]">
               <ShieldCheck className="w-5 h-5 text-[var(--accent-gold)] mb-2" />
               <h3 className="font-serif text-lg text-white font-medium mb-1">EXCLUSIVE FORMATS</h3>
-              <p className="text-xs font-mono text-[var(--text-muted)]">Bespoke 1-on-1 roundtables and architectural keynotes.</p>
+              <p className="text-xs font-mono text-[var(--text-muted)]">Archinet is where architecture, design, and business connect.</p>
             </RevealItem>
           </RevealGroup>
 
@@ -100,19 +100,6 @@ export default function AboutSection() {
                 <CheckCircle2 className="w-4 h-4 text-[var(--accent-gold)] shrink-0" />
                 <span>Bespoke design dialogue and structural interactions</span>
               </div>
-            </div>
-          </RevealItem>
-
-          {/* CTA Button */}
-          <RevealItem variants={fadeRight}>
-            <div className="pt-4">
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-[var(--accent-gold)] bg-transparent hover:bg-[var(--accent-gold)] text-white hover:text-[#070707] text-xs font-mono font-bold tracking-widest transition-all duration-300"
-              >
-                <span>MORE ABOUT US</span>
-                <ArrowUpRight className="w-4 h-4" />
-              </a>
             </div>
           </RevealItem>
 
