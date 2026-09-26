@@ -39,29 +39,6 @@ export default function EditionsSection() {
   return (
     <section id="editions" className="relative z-10 w-full bg-[#050505] text-[#f4f2ed] border-t border-white/[0.06] overflow-hidden">
       
-      {/* 1. Compact Section Header / Navigation Bar (~70-75px height) */}
-      <div className="w-full h-[72px] px-6 sm:px-10 lg:px-12 border-b border-white/[0.06] flex items-center justify-between">
-        {/* Left side logo */}
-        <div className="flex items-center gap-1.5">
-          <span className="font-sans text-lg sm:text-xl font-bold tracking-[0.2em] text-[#f4f2ed] uppercase">
-            ARCHINET
-          </span>
-          <span className="text-[#dcb45e] text-xs font-serif leading-none font-light">°</span>
-        </div>
-
-        {/* Right side 2x2 grid icon */}
-        <button 
-          type="button"
-          aria-label="Grid Menu"
-          className="grid grid-cols-2 gap-1 p-2 hover:opacity-80 transition-opacity focus:outline-none"
-        >
-          <span className="w-1.5 h-1.5 bg-[#f4f2ed]/90 rounded-[0.5px]" />
-          <span className="w-1.5 h-1.5 bg-[#f4f2ed]/90 rounded-[0.5px]" />
-          <span className="w-1.5 h-1.5 bg-[#f4f2ed]/90 rounded-[0.5px]" />
-          <span className="w-1.5 h-1.5 bg-[#f4f2ed]/90 rounded-[0.5px]" />
-        </button>
-      </div>
-
       {/* Main Content Body */}
       <div className="w-full py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col items-center">
         
