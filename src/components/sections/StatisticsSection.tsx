@@ -44,7 +44,7 @@ function CountNumber({ value }: { value: string }) {
 
 export default function StatisticsSection() {
   return (
-    <section className="w-full py-20 bg-[#070707] border-b border-[rgba(255,255,255,0.06)]">
+    <section className="w-full py-20 bg-[#070707]">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <RevealGroup
           staggerChildren={0.1}

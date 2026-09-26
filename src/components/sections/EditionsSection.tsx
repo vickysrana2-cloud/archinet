@@ -83,13 +83,13 @@ export default function EditionsSection() {
         {/* 3. Coverflow Carousel */}
         <ScrollReveal variants={scaleIn} className="relative w-full flex flex-col items-center overflow-x-hidden">
           
-          <div className="relative w-full flex items-center justify-center py-6 sm:py-8 min-h-[480px] sm:min-h-[600px]">
+          <div className="relative w-full flex items-center justify-center py-6 sm:py-8 lg:py-10 min-h-[480px] sm:min-h-[600px] lg:min-h-[460px]">
             
             {/* Left Circular Arrow Button */}
             <button
               type="button"
               onClick={handlePrev}
-              className="absolute left-1 sm:left-4 lg:left-8 top-1/2 -translate-y-1/2 z-40 w-10 h-10 sm:w-13 sm:h-13 rounded-full border border-[#dcb45e]/60 hover:border-[#dcb45e] bg-[#090909]/90 text-[#dcb45e] flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 shadow-xl"
+              className="absolute left-1 sm:left-4 lg:left-10 xl:left-16 top-1/2 -translate-y-1/2 z-40 w-10 h-10 sm:w-13 sm:h-13 rounded-full border border-[#dcb45e]/60 hover:border-[#dcb45e] bg-[#090909]/90 text-[#dcb45e] flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 shadow-xl"
               aria-label="Previous edition"
             >
               <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.75]" />
@@ -99,19 +99,19 @@ export default function EditionsSection() {
             <button
               type="button"
               onClick={handleNext}
-              className="absolute right-1 sm:right-4 lg:left-auto lg:right-8 top-1/2 -translate-y-1/2 z-40 w-10 h-10 sm:w-13 sm:h-13 rounded-full border border-[#dcb45e]/60 hover:border-[#dcb45e] bg-[#090909]/90 text-[#dcb45e] flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 shadow-xl"
+              className="absolute right-1 sm:right-4 lg:left-auto lg:right-10 xl:right-16 top-1/2 -translate-y-1/2 z-40 w-10 h-10 sm:w-13 sm:h-13 rounded-full border border-[#dcb45e]/60 hover:border-[#dcb45e] bg-[#090909]/90 text-[#dcb45e] flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 shadow-xl"
               aria-label="Next edition"
             >
               <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.75]" />
             </button>
 
-            {/* Drag-enabled Cards Track with Negative Overlap (-space-x) */}
+            {/* Drag-enabled Cards Track with Desktop Overlap */}
             <motion.div 
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
               dragElastic={0.2}
               onDragEnd={handleDragEnd}
-              className="flex items-center justify-center -space-x-12 sm:-space-x-20 md:-space-x-28 w-full max-w-6xl px-0 sm:px-12"
+              className="flex items-center justify-center -space-x-12 sm:-space-x-20 lg:-space-x-16 xl:-space-x-20 w-full max-w-6xl lg:max-w-[1150px] xl:max-w-[1250px] px-0 sm:px-12"
             >
               {[prev, active, next].map((itemIndex, positionIdx) => {
                 const isCenter = positionIdx === 1;
@@ -141,12 +141,12 @@ export default function EditionsSection() {
                     className={[
                       "shrink-0 cursor-pointer select-none rounded-[20px] overflow-hidden relative",
                       isCenter
-                        ? "w-[74vw] max-w-[310px] sm:w-[490px] lg:w-[550px] bg-[#080808] border border-[#dcb45e]/60 shadow-[0_0_40px_rgba(190,150,60,0.12)] p-3 sm:p-5 z-30 relative"
-                        : "w-[70vw] max-w-[285px] sm:w-[460px] lg:w-[510px] bg-[#0a0a0a] border border-white/10 p-3 sm:p-5 hover:opacity-75 z-10 relative"
+                        ? "w-[74vw] max-w-[310px] sm:w-[490px] lg:w-[380px] xl:w-[390px] bg-[#080808] border border-[#dcb45e]/60 shadow-[0_0_40px_rgba(190,150,60,0.12)] p-3 sm:p-5 z-30 relative"
+                        : "w-[70vw] max-w-[285px] sm:w-[460px] lg:w-[350px] xl:w-[360px] bg-[#0a0a0a] border border-white/10 p-3 sm:p-5 hover:opacity-75 z-10 relative"
                     ].join(" ")}
                   >
-                    {/* Taller Inset Image Box matching Screenshot 2 */}
-                    <div className="relative w-full h-[190px] sm:h-[280px] lg:h-[320px] rounded-xl overflow-hidden bg-black/60">
+                    {/* Image Box (Landscape aspect ratio ~1.5 on desktop matching Screenshot 1) */}
+                    <div className="relative w-full h-[190px] sm:h-[280px] lg:h-[250px] xl:h-[260px] rounded-xl overflow-hidden bg-black/60">
                       <img
                         src={edition.image}
                         alt={edition.venue}
@@ -162,7 +162,7 @@ export default function EditionsSection() {
 
                     {/* Metadata Info Below Image */}
                     <div className="mt-4 px-1">
-                      <h3 className="font-serif text-xl sm:text-2xl lg:text-3xl text-[#f4f2ed] font-medium tracking-tight truncate">
+                      <h3 className="font-serif text-xl sm:text-2xl lg:text-2xl text-[#f4f2ed] font-medium tracking-tight truncate">
                         {edition.venue}
                       </h3>
 
