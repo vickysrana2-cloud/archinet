@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { EDITIONS_DATA } from '../../data';
 import { ChevronLeft, ChevronRight, Calendar, MapPin } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ScrollReveal, RevealItem } from '../animations/ScrollReveal';
 import { fadeUp, scaleIn } from '../animations/motionVariants';
 
@@ -27,164 +27,179 @@ export default function EditionsSection() {
 
   const { prev, active, next } = getIndices();
 
+  // Handle drag / swipe gesture threshold
+  const handleDragEnd = (_: any, info: { offset: { x: number } }) => {
+    if (info.offset.x < -50) {
+      handleNext();
+    } else if (info.offset.x > 50) {
+      handlePrev();
+    }
+  };
+
   return (
-    <section id="editions" className="w-full py-24 lg:py-32 px-4 sm:px-6 lg:px-12 bg-[#050505] border-b border-white/10 overflow-hidden">
+    <section id="editions" className="w-full bg-[#050505] text-[#f4f2ed] border-t border-white/[0.06] overflow-hidden">
       
-      <div className="max-w-7xl mx-auto flex flex-col items-center">
+      {/* 1. Compact Section Header / Navigation Bar (~70-75px height) */}
+      <div className="w-full h-[72px] px-6 sm:px-10 lg:px-12 border-b border-white/[0.06] flex items-center justify-between">
+        {/* Left side logo */}
+        <div className="flex items-center gap-1.5">
+          <span className="font-sans text-lg sm:text-xl font-bold tracking-[0.2em] text-[#f4f2ed] uppercase">
+            ARCHINET
+          </span>
+          <span className="text-[#dcb45e] text-xs font-serif leading-none font-light">°</span>
+        </div>
+
+        {/* Right side 2x2 grid icon */}
+        <button 
+          type="button"
+          aria-label="Grid Menu"
+          className="grid grid-cols-2 gap-1 p-2 hover:opacity-80 transition-opacity focus:outline-none"
+        >
+          <span className="w-1.5 h-1.5 bg-[#f4f2ed]/90 rounded-[0.5px]" />
+          <span className="w-1.5 h-1.5 bg-[#f4f2ed]/90 rounded-[0.5px]" />
+          <span className="w-1.5 h-1.5 bg-[#f4f2ed]/90 rounded-[0.5px]" />
+          <span className="w-1.5 h-1.5 bg-[#f4f2ed]/90 rounded-[0.5px]" />
+        </button>
+      </div>
+
+      {/* Main Content Body */}
+      <div className="w-full py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col items-center">
         
-        {/* Centered Section Header */}
-        <ScrollReveal staggerChildren={0.08} className="text-center mb-16 max-w-2xl">
+        {/* 2. Centered Hero Typography */}
+        <ScrollReveal staggerChildren={0.08} className="text-center mb-10 sm:mb-14 max-w-3xl">
           <RevealItem variants={fadeUp}>
-            <h2 className="font-serif text-4xl sm:text-6xl text-white font-normal tracking-tight leading-tight">
-              Built <span className="editorial-italic text-[#dcb45e]">Over Time.</span>
+            <h2 className="font-serif text-4xl sm:text-6xl lg:text-7xl text-[#f4f2ed] font-normal tracking-tight leading-tight">
+              Built <span className="editorial-italic italic text-[#dcb45e] font-serif">Over Time.</span>
             </h2>
           </RevealItem>
 
           <RevealItem variants={fadeUp}>
-            <p className="text-xs font-mono text-[#dcb45e] tracking-[0.3em] uppercase mt-3 font-medium">
+            <p className="text-[11px] sm:text-xs font-sans text-[#a09e97] tracking-[0.3em] uppercase mt-3 sm:mt-4 font-medium max-w-xs sm:max-w-none mx-auto leading-relaxed">
               FROM ONE IDEA TO A CURATED DESIGN NETWORK
             </p>
           </RevealItem>
         </ScrollReveal>
 
-        {/* Carousel Container with Far-Left & Far-Right Arrows */}
-        <ScrollReveal variants={scaleIn} className="relative w-full flex items-center justify-center min-h-[440px] sm:min-h-[480px]">
+        {/* 3. Coverflow Carousel */}
+        <ScrollReveal variants={scaleIn} className="relative w-full flex flex-col items-center overflow-x-hidden">
           
-          {/* Left Floating Arrow Button */}
-          <button
-            type="button"
-            onClick={handlePrev}
-            className="absolute left-2 sm:left-4 lg:left-8 z-30 w-12 h-12 sm:w-14 sm:h-14 rounded-full border border-[#dcb45e]/40 hover:border-[#dcb45e] bg-black/40 backdrop-blur-sm text-[#dcb45e] flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
-            aria-label="Previous edition"
-          >
-            <ChevronLeft className="w-6 h-6 stroke-[1.5]" />
-          </button>
-
-          {/* Right Floating Arrow Button */}
-          <button
-            type="button"
-            onClick={handleNext}
-            className="absolute right-2 sm:right-4 lg:right-8 z-30 w-12 h-12 sm:w-14 sm:h-14 rounded-full border border-[#dcb45e]/40 hover:border-[#dcb45e] bg-black/40 backdrop-blur-sm text-[#dcb45e] flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
-            aria-label="Next edition"
-          >
-            <ChevronRight className="w-6 h-6 stroke-[1.5]" />
-          </button>
-
-          {/* Cards Coverflow Track */}
-          <div className="flex items-center justify-center gap-4 sm:gap-6 lg:gap-8 w-full max-w-6xl px-12 sm:px-16 overflow-hidden py-6">
+          <div className="relative w-full flex items-center justify-center py-6 sm:py-8 min-h-[480px] sm:min-h-[600px]">
             
-            {[prev, active, next].map((itemIndex, positionIdx) => {
-              const isCenter = positionIdx === 1;
-              const edition = EDITIONS_DATA[itemIndex];
+            {/* Left Circular Arrow Button */}
+            <button
+              type="button"
+              onClick={handlePrev}
+              className="absolute left-1 sm:left-4 lg:left-8 top-1/2 -translate-y-1/2 z-40 w-10 h-10 sm:w-13 sm:h-13 rounded-full border border-[#dcb45e]/60 hover:border-[#dcb45e] bg-[#090909]/90 text-[#dcb45e] flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 shadow-xl"
+              aria-label="Previous edition"
+            >
+              <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.75]" />
+            </button>
 
-              return (
-                <motion.div
-                  key={edition.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.85 }}
-                  animate={{ 
-                    opacity: isCenter ? 1 : 0.45, 
-                    scale: isCenter ? 1.04 : 0.88,
-                    filter: isCenter ? 'blur(0px)' : 'blur(0.5px)'
-                  }}
-                  transition={{ 
-                    type: 'spring', 
-                    stiffness: 200, 
-                    damping: 24,
-                    opacity: { duration: 0.5 }
-                  }}
-                  onClick={() => {
-                    if (!isCenter) {
-                      setActiveIndex(itemIndex);
-                    }
-                  }}
-                  className={[
-                    "shrink-0 rounded-2xl bg-[#0a0a0a] p-3.5 sm:p-4 cursor-pointer select-none relative overflow-hidden",
-                    isCenter 
-                      ? "w-[310px] sm:w-[380px] md:w-[430px] border-2 border-[#dcb45e] shadow-[0_0_35px_rgba(220,180,94,0.18)] z-20" 
-                      : "hidden sm:block sm:w-[280px] md:w-[320px] border border-white/10 z-10 hover:opacity-75"
-                  ].join(" ")}
-                >
-                  {/* Card Image Container with Smooth Motion Transition */}
-                  <div className="relative aspect-[16/10] rounded-xl overflow-hidden bg-black/60">
-                    <AnimatePresence mode="wait">
-                      <motion.img 
-                        key={edition.image}
-                        src={edition.image} 
+            {/* Right Circular Arrow Button */}
+            <button
+              type="button"
+              onClick={handleNext}
+              className="absolute right-1 sm:right-4 lg:left-auto lg:right-8 top-1/2 -translate-y-1/2 z-40 w-10 h-10 sm:w-13 sm:h-13 rounded-full border border-[#dcb45e]/60 hover:border-[#dcb45e] bg-[#090909]/90 text-[#dcb45e] flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 shadow-xl"
+              aria-label="Next edition"
+            >
+              <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.75]" />
+            </button>
+
+            {/* Drag-enabled Cards Track with Negative Overlap (-space-x) */}
+            <motion.div 
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragEnd={handleDragEnd}
+              className="flex items-center justify-center -space-x-12 sm:-space-x-20 md:-space-x-28 w-full max-w-6xl px-0 sm:px-12"
+            >
+              {[prev, active, next].map((itemIndex, positionIdx) => {
+                const isCenter = positionIdx === 1;
+                const edition = EDITIONS_DATA[itemIndex];
+
+                return (
+                  <motion.div
+                    key={edition.id}
+                    layout
+                    initial={false}
+                    animate={{
+                      opacity: isCenter ? 1 : 0.45,
+                      scale: isCenter ? 1 : 0.92,
+                      filter: isCenter ? 'brightness(1)' : 'brightness(0.75)',
+                    }}
+                    transition={{
+                      layout: { duration: 0.75, ease: [0.16, 1, 0.3, 1] },
+                      scale: { duration: 0.75, ease: [0.16, 1, 0.3, 1] },
+                      opacity: { duration: 0.55, ease: [0.16, 1, 0.3, 1] },
+                      filter: { duration: 0.55 }
+                    }}
+                    onClick={() => {
+                      if (!isCenter) {
+                        setActiveIndex(itemIndex);
+                      }
+                    }}
+                    className={[
+                      "shrink-0 cursor-pointer select-none rounded-[20px] overflow-hidden relative",
+                      isCenter
+                        ? "w-[74vw] max-w-[310px] sm:w-[490px] lg:w-[550px] bg-[#080808] border border-[#dcb45e]/60 shadow-[0_0_40px_rgba(190,150,60,0.12)] p-3 sm:p-5 z-30 relative"
+                        : "w-[70vw] max-w-[285px] sm:w-[460px] lg:w-[510px] bg-[#0a0a0a] border border-white/10 p-3 sm:p-5 hover:opacity-75 z-10 relative"
+                    ].join(" ")}
+                  >
+                    {/* Taller Inset Image Box matching Screenshot 2 */}
+                    <div className="relative w-full h-[190px] sm:h-[280px] lg:h-[320px] rounded-xl overflow-hidden bg-black/60">
+                      <img
+                        src={edition.image}
                         alt={edition.venue}
-                        initial={{ opacity: 0, scale: 1.08 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.94 }}
-                        transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
-                        className="w-full h-full object-cover pointer-events-none"
+                        className="w-full h-full object-cover transition-transform duration-700 hover:scale-105 pointer-events-none"
                       />
-                    </AnimatePresence>
-                    
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
+                      
+                      {/* Bottom-Left Floating Location Badge */}
+                      <div className="absolute bottom-3 left-3 z-10 flex items-center gap-1.5 px-3 py-1 bg-[#17140e]/95 border border-[#dcb45e]/50 text-[#dcb45e] rounded-full text-xs font-mono tracking-wider uppercase shadow-md">
+                        <MapPin className="w-3 h-3 text-[#dcb45e]" />
+                        <span>{edition.city}</span>
+                      </div>
+                    </div>
 
-                    {/* Bottom Left Location Pill */}
-                    <motion.div 
-                      key={`city-${edition.id}`}
-                      initial={{ opacity: 0, y: 6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4 }}
-                      className="absolute bottom-3 left-3 flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-[#dcb45e]/60 text-[#dcb45e] text-[10px] font-mono font-semibold tracking-wider"
-                    >
-                      <MapPin className="w-3 h-3 text-[#dcb45e]" />
-                      <span>{edition.city}</span>
-                    </motion.div>
-                  </div>
+                    {/* Metadata Info Below Image */}
+                    <div className="mt-4 px-1">
+                      <h3 className="font-serif text-xl sm:text-2xl lg:text-3xl text-[#f4f2ed] font-medium tracking-tight truncate">
+                        {edition.venue}
+                      </h3>
 
-                  {/* Card Content Below Image */}
-                  <div className="mt-4 px-1 pb-1">
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={`info-${edition.id}`}
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -8 }}
-                        transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
-                      >
-                        <h3 className="font-serif text-xl sm:text-2xl text-white font-medium tracking-tight">
-                          {edition.venue}
-                        </h3>
-                        
-                        <div className="flex items-center justify-between mt-2 pt-2 border-t border-white/10 text-xs font-mono">
-                          <span className="text-[#a09e97]">
-                            — {edition.city.charAt(0) + edition.city.slice(1).toLowerCase()}, India
-                          </span>
-                          <span className="text-[#dcb45e] flex items-center gap-1">
-                            <Calendar className="w-3 h-3" />
-                            {edition.date}
-                          </span>
-                        </div>
-                      </motion.div>
-                    </AnimatePresence>
-                  </div>
+                      <div className="flex items-center justify-between mt-2.5 pt-2.5 border-t border-white/[0.08] text-xs sm:text-sm font-sans text-[#a09e97]">
+                        <span className="truncate">
+                          — {edition.city.charAt(0) + edition.city.slice(1).toLowerCase()}, India
+                        </span>
+                        <span className="text-[#dcb45e] font-mono text-xs flex items-center gap-1.5 shrink-0 ml-2">
+                          <Calendar className="w-3.5 h-3.5" />
+                          {edition.date}
+                        </span>
+                      </div>
+                    </div>
 
-                </motion.div>
-              );
-            })}
-
+                  </motion.div>
+                );
+              })}
+            </motion.div>
           </div>
 
-        </ScrollReveal>
+          {/* 4. Pagination Capsule Indicators */}
+          <div className="flex items-center justify-center gap-2 mt-6 sm:mt-10">
+            {EDITIONS_DATA.map((edition, idx) => (
+              <button
+                key={edition.id}
+                type="button"
+                onClick={() => setActiveIndex(idx)}
+                className={`transition-all duration-500 ${
+                  activeIndex === idx
+                    ? 'w-7 h-2 bg-[#dcb45e] rounded-full'
+                    : 'w-2 h-2 bg-white/20 hover:bg-white/40 rounded-full'
+                }`}
+                aria-label={`Go to ${edition.venue}`}
+              />
+            ))}
+          </div>
 
-        {/* Bottom Pagination Capsular Dots */}
-        <ScrollReveal variants={fadeUp} className="flex items-center justify-center gap-2 mt-10">
-          {EDITIONS_DATA.map((edition, idx) => (
-            <button
-              key={edition.id}
-              type="button"
-              onClick={() => setActiveIndex(idx)}
-              className={`h-1.5 rounded-full transition-all duration-500 ${
-                activeIndex === idx 
-                  ? 'w-8 bg-[#dcb45e]' 
-                  : 'w-1.5 bg-white/20 hover:bg-white/50'
-              }`}
-              aria-label={`Go to ${edition.venue}`}
-            />
-          ))}
         </ScrollReveal>
 
       </div>
@@ -192,4 +207,5 @@ export default function EditionsSection() {
     </section>
   );
 }
+
 
