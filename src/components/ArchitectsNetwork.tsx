@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import { ShieldCheck, MapPin, Award, Users, ArrowUpRight, CheckCircle, MessageSquare } from 'lucide-react';
+import { ScrollReveal, RevealItem, RevealGroup } from './animations/ScrollReveal';
+import { fadeLeft, fadeRight, cardReveal } from './animations/motionVariants';
 
 interface Studio {
   id: string;
@@ -69,26 +71,31 @@ export default function ArchitectsNetwork() {
     <section id="studios" className="py-16 px-4 lg:px-8 max-w-7xl mx-auto border-t border-[var(--border-light)]">
       
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
-        <div>
-          <div className="flex items-center gap-2 mb-2">
-            <span className="badge-cyan">GLOBAL MESH DIRECTORY</span>
-            <span className="text-xs font-mono text-[var(--text-muted)]">// VERIFIED ARCHITECTURAL NODES</span>
+      <ScrollReveal staggerChildren={0.1} className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+        <RevealItem variants={fadeLeft}>
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="badge-cyan">GLOBAL MESH DIRECTORY</span>
+              <span className="text-xs font-mono text-[var(--text-muted)]">// VERIFIED ARCHITECTURAL NODES</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Leading Studios & <span className="text-gradient-cyan">Architectural Nodes</span>
+            </h2>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Leading Studios & <span className="text-gradient-cyan">Architectural Nodes</span>
-          </h2>
-        </div>
-        <p className="text-xs text-[var(--text-secondary)] font-mono max-w-sm">
-          Collaborate with accredited architectural firms, share parametric code, and peer-verify BIM structural models.
-        </p>
-      </div>
+        </RevealItem>
+        <RevealItem variants={fadeRight}>
+          <p className="text-xs text-[var(--text-secondary)] font-mono max-w-sm">
+            Collaborate with accredited architectural firms, share parametric code, and peer-verify BIM structural models.
+          </p>
+        </RevealItem>
+      </ScrollReveal>
 
       {/* Studio Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <RevealGroup staggerChildren={0.1} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {STUDIOS_DATA.map((studio) => (
-          <div
+          <RevealItem
             key={studio.id}
+            variants={cardReveal}
             className="glass-panel-interactive rounded-2xl p-5 border border-[var(--border-light)] flex flex-col justify-between"
           >
             <div>
@@ -137,9 +144,9 @@ export default function ArchitectsNetwork() {
               </button>
             </div>
 
-          </div>
+          </RevealItem>
         ))}
-      </div>
+      </RevealGroup>
 
       {/* Studio Contact Modal */}
       {selectedStudio && (

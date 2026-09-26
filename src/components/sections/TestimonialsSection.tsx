@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { TESTIMONIALS_DATA } from '../../data';
 import { motion } from 'framer-motion';
+import { ScrollReveal, RevealItem } from '../animations/ScrollReveal';
+import { fadeRight, imageReveal } from '../animations/motionVariants';
 
 export default function TestimonialsSection() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -63,11 +65,8 @@ export default function TestimonialsSection() {
         {/* =========================================================
             LEFT — 40% IMAGE
         ========================================================= */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1 }}
+        <ScrollReveal
+          variants={imageReveal}
           className="
             relative
             min-h-[420px]
@@ -117,12 +116,13 @@ export default function TestimonialsSection() {
               lg:hidden
             "
           />
-        </motion.div>
+        </ScrollReveal>
 
         {/* =========================================================
             RIGHT — 60% CONTENT
         ========================================================= */}
-        <div
+        <ScrollReveal
+          staggerChildren={0.1}
           className="
             relative
             flex
@@ -142,14 +142,8 @@ export default function TestimonialsSection() {
           {/* =====================================================
               HEADING — EXACTLY 2 LINES
           ===================================================== */}
-          <motion.h2
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{
-              duration: 0.8,
-              ease: [0.22, 1, 0.36, 1],
-            }}
+          <RevealItem
+            variants={fadeRight}
             className="
               relative
               z-30
@@ -169,7 +163,7 @@ export default function TestimonialsSection() {
             WHAT OUR
             <br />
             ATTENDEES SAY
-          </motion.h2>
+          </RevealItem>
 
           {/* =====================================================
               CAROUSEL STAGE
@@ -477,7 +471,7 @@ export default function TestimonialsSection() {
             </div>
 
           </div>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   );

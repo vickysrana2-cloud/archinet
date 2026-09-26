@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import { Search, Filter, Layers, ExternalLink, ShieldCheck, Download, Eye, Award, Maximize2 } from 'lucide-react';
+import { ScrollReveal, RevealItem, RevealGroup } from './animations/ScrollReveal';
+import { fadeLeft, fadeRight, cardReveal } from './animations/motionVariants';
 
 interface Project {
   id: string;
@@ -125,32 +127,36 @@ export default function ProjectGallery({ onSelectProject }: { onSelectProject?: 
     <section id="vault" className="py-16 px-4 lg:px-8 max-w-7xl mx-auto border-t border-[var(--border-light)]">
       
       {/* Header & Controls */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
-        <div>
-          <div className="flex items-center gap-2 mb-2">
-            <span className="badge-amber">ARCHITECTURAL VAULT</span>
-            <span className="text-xs font-mono text-[var(--text-muted)]">// OPEN VECTOR INDEX</span>
+      <ScrollReveal staggerChildren={0.1} className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+        <RevealItem variants={fadeLeft}>
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="badge-amber">ARCHITECTURAL VAULT</span>
+              <span className="text-xs font-mono text-[var(--text-muted)]">// OPEN VECTOR INDEX</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Curated Blueprint <span className="text-gradient-amber">& CAD Repository</span>
+            </h2>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Curated Blueprint <span className="text-gradient-amber">& CAD Repository</span>
-          </h2>
-        </div>
+        </RevealItem>
 
         {/* Search Input Bar */}
-        <div className="relative w-full md:w-80">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)]" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search title, architect, or studio..."
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-light)] text-white text-xs font-mono focus:outline-none focus:border-[var(--accent-cyan)] transition-all"
-          />
-        </div>
-      </div>
+        <RevealItem variants={fadeRight}>
+          <div className="relative w-full md:w-80">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)]" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search title, architect, or studio..."
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-light)] text-white text-xs font-mono focus:outline-none focus:border-[var(--accent-cyan)] transition-all"
+            />
+          </div>
+        </RevealItem>
+      </ScrollReveal>
 
       {/* Category Tabs */}
-      <div className="flex items-center gap-2 mb-8 overflow-x-auto pb-2">
+      <ScrollReveal variants={fadeLeft} className="flex items-center gap-2 mb-8 overflow-x-auto pb-2">
         {categories.map((cat) => (
           <button
             key={cat}
@@ -164,13 +170,14 @@ export default function ProjectGallery({ onSelectProject }: { onSelectProject?: 
             {cat}
           </button>
         ))}
-      </div>
+      </ScrollReveal>
 
       {/* Projects Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <RevealGroup staggerChildren={0.1} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredProjects.map((project) => (
-          <div
+          <RevealItem
             key={project.id}
+            variants={cardReveal}
             className="glass-panel-interactive rounded-2xl p-5 border border-[var(--border-light)] flex flex-col justify-between group"
           >
             <div>
@@ -233,9 +240,9 @@ export default function ProjectGallery({ onSelectProject }: { onSelectProject?: 
               </button>
             </div>
 
-          </div>
+          </RevealItem>
         ))}
-      </div>
+      </RevealGroup>
 
       {/* Blueprint Detail Modal Popup */}
       {selectedModalProject && (

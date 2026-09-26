@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { CheckCircle2, Play, ArrowUpRight, ShieldCheck, Sparkles } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { ScrollReveal, RevealItem, RevealGroup } from '../animations/ScrollReveal';
+import { fadeLeft, fadeRight, fadeUp, imageReveal, cardReveal } from '../animations/motionVariants';
 
 export default function AboutSection() {
   return (
@@ -10,12 +11,9 @@ export default function AboutSection() {
       
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         
-        {/* Left Column: Image with Floating Video Card */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+        {/* Left Column: Image with Floating Video Card (Enters from Left) */}
+        <ScrollReveal
+          variants={imageReveal}
           className="lg:col-span-6 relative"
         >
           {/* Main Large Image */}
@@ -48,74 +46,81 @@ export default function AboutSection() {
             <span className="text-[10px] font-mono text-[var(--accent-gold)] tracking-widest uppercase block mb-1">PROMO REEL</span>
             <p className="text-xs font-serif text-white font-medium">Inside ArchiNet Summit Experience</p>
           </div>
-        </motion.div>
+        </ScrollReveal>
 
-        {/* Right Column: Copy & Specs */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+        {/* Right Column: Copy & Specs (Enters with staggered sequence) */}
+        <ScrollReveal
+          staggerChildren={0.09}
           className="lg:col-span-6 flex flex-col gap-6"
         >
-          
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[rgba(197,168,128,0.1)] border border-[rgba(197,168,128,0.3)] w-fit">
-            <span className="text-[11px] font-mono tracking-widest text-[var(--accent-gold)] font-medium uppercase">
-              ABOUT ARCHINET
-            </span>
-          </div>
+          <RevealItem variants={fadeRight}>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[rgba(197,168,128,0.1)] border border-[rgba(197,168,128,0.3)] w-fit">
+              <span className="text-[11px] font-mono tracking-widest text-[var(--accent-gold)] font-medium uppercase">
+                ABOUT ARCHINET
+              </span>
+            </div>
+          </RevealItem>
 
-          <h2 className="font-serif text-4xl sm:text-6xl text-white font-light leading-tight tracking-tight">
-            A bridge between <br />
-            <span className="editorial-italic">brands & visionaries.</span>
-          </h2>
+          <RevealItem variants={fadeRight}>
+            <h2 className="font-serif text-4xl sm:text-6xl text-white font-light leading-tight tracking-tight">
+              A bridge between <br />
+              <span className="editorial-italic">brands & visionaries.</span>
+            </h2>
+          </RevealItem>
 
-          <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed font-sans">
-            ArchiNet Summit is a curated luxury architectural network designed to unite leading global design minds, principal architects, and luxury interior brand innovators. We cultivate bespoke design dialogue, strategic partnerships, and structural mastery.
-          </p>
+          <RevealItem variants={fadeRight}>
+            <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed font-sans">
+              ArchiNet Summit is a curated luxury architectural network designed to unite leading global design minds, principal architects, and luxury interior brand innovators. We cultivate bespoke design dialogue, strategic partnerships, and structural mastery.
+            </p>
+          </RevealItem>
 
-          {/* Feature Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-2">
-            <div className="p-4 rounded-xl bg-[#0d0d0d] border border-[rgba(255,255,255,0.08)]">
+          {/* Feature Cards Grid (Staggered Cards) */}
+          <RevealGroup staggerChildren={0.12} className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-2">
+            <RevealItem variants={cardReveal} className="p-4 rounded-xl bg-[#0d0d0d] border border-[rgba(255,255,255,0.08)]">
               <Sparkles className="w-5 h-5 text-[var(--accent-gold)] mb-2" />
               <h3 className="font-serif text-lg text-white font-medium mb-1">CURATED NETWORK</h3>
               <p className="text-xs font-mono text-[var(--text-muted)]">By-invitation matrix of principal partners & decision makers.</p>
-            </div>
+            </RevealItem>
 
-            <div className="p-4 rounded-xl bg-[#0d0d0d] border border-[rgba(255,255,255,0.08)]">
+            <RevealItem variants={cardReveal} className="p-4 rounded-xl bg-[#0d0d0d] border border-[rgba(255,255,255,0.08)]">
               <ShieldCheck className="w-5 h-5 text-[var(--accent-gold)] mb-2" />
               <h3 className="font-serif text-lg text-white font-medium mb-1">EXCLUSIVE FORMATS</h3>
               <p className="text-xs font-mono text-[var(--text-muted)]">Bespoke 1-on-1 roundtables and architectural keynotes.</p>
-            </div>
-          </div>
+            </RevealItem>
+          </RevealGroup>
 
           {/* Bullet List */}
-          <div className="flex flex-col gap-2 pt-2">
-            <div className="flex items-center gap-3 text-xs font-mono text-[var(--text-ivory)]">
-              <CheckCircle2 className="w-4 h-4 text-[var(--accent-gold)] shrink-0" />
-              <span>Quality and exclusivity over pure footfall</span>
+          <RevealItem variants={fadeRight}>
+            <div className="flex flex-col gap-2 pt-2">
+              <div className="flex items-center gap-3 text-xs font-mono text-[var(--text-ivory)]">
+                <CheckCircle2 className="w-4 h-4 text-[var(--accent-gold)] shrink-0" />
+                <span>Quality and exclusivity over pure footfall</span>
+              </div>
+              <div className="flex items-center gap-3 text-xs font-mono text-[var(--text-ivory)]">
+                <CheckCircle2 className="w-4 h-4 text-[var(--accent-gold)] shrink-0" />
+                <span>Bespoke design dialogue and structural interactions</span>
+              </div>
             </div>
-            <div className="flex items-center gap-3 text-xs font-mono text-[var(--text-ivory)]">
-              <CheckCircle2 className="w-4 h-4 text-[var(--accent-gold)] shrink-0" />
-              <span>Bespoke design dialogue and structural interactions</span>
-            </div>
-          </div>
+          </RevealItem>
 
           {/* CTA Button */}
-          <div className="pt-4">
-            <a
-              href="#contact"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-[var(--accent-gold)] bg-transparent hover:bg-[var(--accent-gold)] text-white hover:text-[#070707] text-xs font-mono font-bold tracking-widest transition-all duration-300"
-            >
-              <span>MORE ABOUT US</span>
-              <ArrowUpRight className="w-4 h-4" />
-            </a>
-          </div>
+          <RevealItem variants={fadeRight}>
+            <div className="pt-4">
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full border border-[var(--accent-gold)] bg-transparent hover:bg-[var(--accent-gold)] text-white hover:text-[#070707] text-xs font-mono font-bold tracking-widest transition-all duration-300"
+              >
+                <span>MORE ABOUT US</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </a>
+            </div>
+          </RevealItem>
 
-        </motion.div>
+        </ScrollReveal>
 
       </div>
 
     </section>
   );
 }
+

@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { EDITIONS_DATA } from '../../data';
 import { ChevronLeft, ChevronRight, Calendar, MapPin } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ScrollReveal, RevealItem } from '../animations/ScrollReveal';
+import { fadeUp, scaleIn } from '../animations/motionVariants';
 
 export default function EditionsSection() {
   const [activeIndex, setActiveIndex] = useState(1); // Default to ITC Kohinoor (index 1)
@@ -31,17 +33,22 @@ export default function EditionsSection() {
       <div className="max-w-7xl mx-auto flex flex-col items-center">
         
         {/* Centered Section Header */}
-        <div className="text-center mb-16 max-w-2xl">
-          <h2 className="font-serif text-4xl sm:text-6xl text-white font-normal tracking-tight leading-tight">
-            Built <span className="editorial-italic text-[#dcb45e]">Over Time.</span>
-          </h2>
-          <p className="text-xs font-mono text-[#dcb45e] tracking-[0.3em] uppercase mt-3 font-medium">
-            FROM ONE IDEA TO A CURATED DESIGN NETWORK
-          </p>
-        </div>
+        <ScrollReveal staggerChildren={0.08} className="text-center mb-16 max-w-2xl">
+          <RevealItem variants={fadeUp}>
+            <h2 className="font-serif text-4xl sm:text-6xl text-white font-normal tracking-tight leading-tight">
+              Built <span className="editorial-italic text-[#dcb45e]">Over Time.</span>
+            </h2>
+          </RevealItem>
+
+          <RevealItem variants={fadeUp}>
+            <p className="text-xs font-mono text-[#dcb45e] tracking-[0.3em] uppercase mt-3 font-medium">
+              FROM ONE IDEA TO A CURATED DESIGN NETWORK
+            </p>
+          </RevealItem>
+        </ScrollReveal>
 
         {/* Carousel Container with Far-Left & Far-Right Arrows */}
-        <div className="relative w-full flex items-center justify-center min-h-[440px] sm:min-h-[480px]">
+        <ScrollReveal variants={scaleIn} className="relative w-full flex items-center justify-center min-h-[440px] sm:min-h-[480px]">
           
           {/* Left Floating Arrow Button */}
           <button
@@ -161,10 +168,10 @@ export default function EditionsSection() {
 
           </div>
 
-        </div>
+        </ScrollReveal>
 
         {/* Bottom Pagination Capsular Dots */}
-        <div className="flex items-center justify-center gap-2 mt-10">
+        <ScrollReveal variants={fadeUp} className="flex items-center justify-center gap-2 mt-10">
           {EDITIONS_DATA.map((edition, idx) => (
             <button
               key={edition.id}
@@ -178,10 +185,11 @@ export default function EditionsSection() {
               aria-label={`Go to ${edition.venue}`}
             />
           ))}
-        </div>
+        </ScrollReveal>
 
       </div>
 
     </section>
   );
 }
+

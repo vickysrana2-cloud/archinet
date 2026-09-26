@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 import MobileMenu from './MobileMenu';
+import { motion } from 'framer-motion';
+import { PREMIUM_EASE } from '../animations/motionVariants';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -27,7 +29,10 @@ export default function Header() {
 
   return (
     <>
-      <header
+      <motion.header
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: PREMIUM_EASE }}
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
           isScrolled
             ? 'bg-[#070707]/90 backdrop-blur-md border-b border-[rgba(197,168,128,0.15)] py-4'
@@ -77,9 +82,10 @@ export default function Header() {
           </button>
 
         </div>
-      </header>
+      </motion.header>
 
       <MobileMenu isOpen={isMobileOpen} onClose={() => setIsMobileOpen(false)} navLinks={navLinks} />
     </>
   );
 }
+

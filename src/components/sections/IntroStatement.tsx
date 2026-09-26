@@ -3,6 +3,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { EVENT_DATA } from '../../data';
 import { motion, useScroll, useTransform, MotionValue } from 'framer-motion';
+import { ScrollReveal, RevealItem } from '../animations/ScrollReveal';
+import { fadeUp } from '../animations/motionVariants';
 
 interface WordProps {
   word: string;
@@ -60,18 +62,14 @@ export default function IntroStatement() {
       ref={containerRef}
       className="w-full py-32 sm:py-48 px-6 lg:px-12 bg-[#050505] flex flex-col items-center justify-center text-center overflow-hidden border-b border-white/10"
     >
-      <div className="max-w-6xl mx-auto flex flex-col items-center text-center">
+      <ScrollReveal className="max-w-6xl mx-auto flex flex-col items-center text-center">
         
         {/* Purpose Eyebrow Tag */}
-        <motion.span 
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-xs font-mono tracking-[0.35em] text-[#dcb45e] uppercase block mb-10 font-medium text-center"
-        >
-          OUR PURPOSE // VISION STATEMENT
-        </motion.span>
+        <RevealItem variants={fadeUp}>
+          <span className="text-xs font-mono tracking-[0.35em] text-[#dcb45e] uppercase block mb-10 font-medium text-center">
+            OUR PURPOSE // VISION STATEMENT
+          </span>
+        </RevealItem>
 
         {/* Scroll-Driven Text Brightness Reveal Statement */}
         <h2 className="font-serif text-xl sm:text-3xl lg:text-4xl text-white font-light leading-relaxed sm:leading-relaxed lg:leading-relaxed tracking-tight uppercase max-w-4xl mx-auto text-center flex flex-wrap justify-center items-center">
@@ -89,7 +87,8 @@ export default function IntroStatement() {
           <span className="text-[#dcb45e]/50 ml-1 font-normal">&rdquo;</span>
         </h2>
 
-      </div>
+      </ScrollReveal>
     </section>
   );
 }
+

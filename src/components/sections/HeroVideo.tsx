@@ -2,7 +2,8 @@
 
 import React, { useState, useRef } from 'react';
 import { Play, Pause } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { ScrollReveal } from '../animations/ScrollReveal';
+import { scaleIn } from '../animations/motionVariants';
 
 export default function HeroVideo() {
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -68,11 +69,8 @@ export default function HeroVideo() {
       {/* Centered Circular STAY TUNED / PLAY-PAUSE Badge */}
       <div className="relative z-20 flex items-center justify-center text-center">
         
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+        <ScrollReveal
+          variants={scaleIn}
           className="relative group cursor-pointer"
         >
           {/* Interactive Badge Button */}
@@ -121,10 +119,11 @@ export default function HeroVideo() {
             </div>
 
           </button>
-        </motion.div>
+        </ScrollReveal>
 
       </div>
 
     </section>
   );
 }
+

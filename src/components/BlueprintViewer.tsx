@@ -2,6 +2,8 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { Layers, ZoomIn, ZoomOut, RefreshCw, Eye, EyeOff, Cpu, Crosshair, Info, CheckCircle2, Zap, Wind, Grid, Download } from 'lucide-react';
+import { ScrollReveal, RevealItem } from './animations/ScrollReveal';
+import { fadeLeft, fadeRight, fadeUp, scaleIn } from './animations/motionVariants';
 
 interface PresetProject {
   id: string;
@@ -95,37 +97,41 @@ export default function BlueprintViewer() {
     <section id="viewer" className="py-12 px-4 lg:px-8 max-w-7xl mx-auto">
       
       {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
-        <div>
-          <div className="flex items-center gap-2 mb-2">
-            <span className="badge-cyan">INTERACTIVE CAD ENGINE</span>
-            <span className="text-xs font-mono text-[var(--text-muted)]">// VECTOR MATRIX ENGINE v4.2</span>
+      <ScrollReveal staggerChildren={0.1} className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+        <RevealItem variants={fadeLeft}>
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="badge-cyan">INTERACTIVE CAD ENGINE</span>
+              <span className="text-xs font-mono text-[var(--text-muted)]">// VECTOR MATRIX ENGINE v4.2</span>
+            </div>
+            <h2 className="text-3xl font-extrabold text-white tracking-tight">
+              Vector Blueprint & <span className="text-gradient-cyan">Layer Inspector</span>
+            </h2>
           </div>
-          <h2 className="text-3xl font-extrabold text-white tracking-tight">
-            Vector Blueprint & <span className="text-gradient-cyan">Layer Inspector</span>
-          </h2>
-        </div>
+        </RevealItem>
 
         {/* Preset Switcher */}
-        <div className="flex items-center gap-2 bg-[var(--bg-secondary)] p-1.5 rounded-xl border border-[var(--border-light)] overflow-x-auto">
-          {PRESET_PROJECTS.map((project) => (
-            <button
-              key={project.id}
-              onClick={() => {
-                setSelectedPreset(project);
-                setActiveNode(null);
-              }}
-              className={`px-3.5 py-1.5 rounded-lg font-mono text-xs transition-all whitespace-nowrap ${
-                selectedPreset.id === project.id
-                  ? 'bg-[var(--accent-cyan)] text-[#070a11] font-bold shadow-md'
-                  : 'text-[var(--text-secondary)] hover:text-white'
-              }`}
-            >
-              {project.name}
-            </button>
-          ))}
-        </div>
-      </div>
+        <RevealItem variants={fadeRight}>
+          <div className="flex items-center gap-2 bg-[var(--bg-secondary)] p-1.5 rounded-xl border border-[var(--border-light)] overflow-x-auto">
+            {PRESET_PROJECTS.map((project) => (
+              <button
+                key={project.id}
+                onClick={() => {
+                  setSelectedPreset(project);
+                  setActiveNode(null);
+                }}
+                className={`px-3.5 py-1.5 rounded-lg font-mono text-xs transition-all whitespace-nowrap ${
+                  selectedPreset.id === project.id
+                    ? 'bg-[var(--accent-cyan)] text-[#070a11] font-bold shadow-md'
+                    : 'text-[var(--text-secondary)] hover:text-white'
+                }`}
+              >
+                {project.name}
+              </button>
+            ))}
+          </div>
+        </RevealItem>
+      </ScrollReveal>
 
       {/* Main CAD Viewer Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">

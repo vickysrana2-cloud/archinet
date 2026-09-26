@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { LEADERS_DATA } from '../../data';
-import { motion } from 'framer-motion';
+import { ScrollReveal, RevealItem, RevealGroup } from '../animations/ScrollReveal';
+import { fadeLeft, fadeRight, cardReveal } from '../animations/motionVariants';
 
 export default function LeadersSection() {
   return (
@@ -11,29 +12,31 @@ export default function LeadersSection() {
       <div className="max-w-7xl mx-auto">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-          <div>
-            <span className="text-xs font-mono tracking-[0.25em] text-[var(--accent-gold)] uppercase block mb-3">
-              KEYNOTE VISIONARIES
-            </span>
-            <h2 className="font-serif text-4xl sm:text-6xl text-white font-light tracking-tight">
-              Our Industry <span className="editorial-italic">Leaders.</span>
-            </h2>
-          </div>
-          <p className="text-xs font-mono text-[var(--text-muted)] tracking-wider max-w-xs uppercase">
-            DISTINGUISHED PRINCIPALS & CREATIVE DIRECTORS SHAPING GLOBAL SKYLINE DESIGN
-          </p>
-        </div>
+        <ScrollReveal staggerChildren={0.1} className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <RevealItem variants={fadeLeft}>
+            <div>
+              <span className="text-xs font-mono tracking-[0.25em] text-[var(--accent-gold)] uppercase block mb-3">
+                KEYNOTE VISIONARIES
+              </span>
+              <h2 className="font-serif text-4xl sm:text-6xl text-white font-light tracking-tight">
+                Our Industry <span className="editorial-italic">Leaders.</span>
+              </h2>
+            </div>
+          </RevealItem>
+
+          <RevealItem variants={fadeRight}>
+            <p className="text-xs font-mono text-[var(--text-muted)] tracking-wider max-w-xs uppercase">
+              DISTINGUISHED PRINCIPALS & CREATIVE DIRECTORS SHAPING GLOBAL SKYLINE DESIGN
+            </p>
+          </RevealItem>
+        </ScrollReveal>
 
         {/* Leaders Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-          {LEADERS_DATA.map((leader, idx) => (
-            <motion.div
+        <RevealGroup staggerChildren={0.1} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+          {LEADERS_DATA.map((leader) => (
+            <RevealItem
               key={leader.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: idx * 0.1 }}
+              variants={cardReveal}
               className="group flex flex-col"
             >
               <div className="relative aspect-[3/4] rounded-xl overflow-hidden mb-4 border border-[rgba(255,255,255,0.1)] group-hover:border-[var(--accent-gold)] transition-colors duration-500">
@@ -51,12 +54,13 @@ export default function LeadersSection() {
               </h3>
               <p className="text-xs font-mono text-[var(--accent-gold)] font-medium mt-0.5">{leader.role}</p>
               <p className="text-xs font-mono text-[var(--text-muted)]">{leader.company}</p>
-            </motion.div>
+            </RevealItem>
           ))}
-        </div>
+        </RevealGroup>
 
       </div>
 
     </section>
   );
 }
+

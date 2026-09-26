@@ -3,7 +3,8 @@
 import React from 'react';
 import { EVENT_DATA } from '../../data';
 import { useCountdown } from '../../hooks/useCountdown';
-import { motion } from 'framer-motion';
+import { ScrollReveal, RevealItem, RevealGroup } from '../animations/ScrollReveal';
+import { fadeLeft, fadeRight, fadeUp, imageReveal, cardReveal } from '../animations/motionVariants';
 
 export default function EventHero() {
   const { days, hours, minutes, seconds } = useCountdown(EVENT_DATA.targetDateISO);
@@ -17,12 +18,9 @@ export default function EventHero() {
       <div id="14th-edition" className="absolute top-0 left-0" />
       <div className="w-full min-h-[620px] lg:min-h-[700px] grid grid-cols-1 lg:grid-cols-12 items-stretch">
         
-        {/* Left Column: Full-Height Dark Monochrome Audience Photo */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.9 }}
+        {/* Left Column: Full-Height Dark Monochrome Audience Photo (Enters from Left) */}
+        <ScrollReveal 
+          variants={imageReveal}
           className="lg:col-span-6 relative min-h-[350px] sm:min-h-[450px] lg:min-h-full w-full overflow-hidden"
         >
           <div 
@@ -34,7 +32,7 @@ export default function EventHero() {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-[#050505] hidden lg:block" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent lg:hidden" />
-        </motion.div>
+        </ScrollReveal>
 
         {/* Right Column: Event Content, Countdown Circles & CTAs */}
         <div className="lg:col-span-6 relative flex flex-col justify-center px-8 sm:px-12 lg:px-16 py-16 sm:py-20 lg:py-24 bg-[#050505]">
@@ -47,92 +45,97 @@ export default function EventHero() {
             14
           </span>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+          <ScrollReveal 
+            staggerChildren={0.08}
             className="relative z-10 flex flex-col gap-7 max-w-xl"
           >
             
             {/* Eyebrow */}
-            <span className="text-xs font-mono tracking-[0.35em] text-[#dcb45e] font-medium uppercase">
-              {EVENT_DATA.eyebrow || 'THE REFINED CHAPTER'}
-            </span>
+            <RevealItem variants={fadeRight}>
+              <span className="text-xs font-mono tracking-[0.35em] text-[#dcb45e] font-medium uppercase">
+                {EVENT_DATA.eyebrow || 'THE REFINED CHAPTER'}
+              </span>
+            </RevealItem>
 
             {/* Main Title */}
-            <h2 className="font-serif text-5xl sm:text-7xl font-normal text-[#f4f0e8] tracking-tight leading-none">
-              14th Edition
-            </h2>
+            <RevealItem variants={fadeRight}>
+              <h2 className="font-serif text-5xl sm:text-7xl font-normal text-[#f4f0e8] tracking-tight leading-none">
+                14th Edition
+              </h2>
+            </RevealItem>
 
             {/* Event Meta Line */}
-            <p className="text-[11px] sm:text-xs font-mono text-[#dcb45e] tracking-[0.18em] uppercase leading-relaxed">
-              20 FEBRUARY 2027 <span className="mx-2 text-[#dcb45e]/60">•</span> THE ST. REGIS, MUMBAI <span className="mx-2 text-[#dcb45e]/60">•</span> BY INVITATION ONLY
-            </p>
+            <RevealItem variants={fadeRight}>
+              <p className="text-[11px] sm:text-xs font-mono text-[#dcb45e] tracking-[0.18em] uppercase leading-relaxed">
+                20 FEBRUARY 2027 <span className="mx-2 text-[#dcb45e]/60">•</span> THE ST. REGIS, MUMBAI <span className="mx-2 text-[#dcb45e]/60">•</span> BY INVITATION ONLY
+              </p>
+            </RevealItem>
 
             {/* Circular Countdown Timers */}
-            <div className="grid grid-cols-4 gap-3 sm:gap-5 py-4">
+            <RevealGroup staggerChildren={0.08} className="grid grid-cols-4 gap-3 sm:gap-5 py-4">
               
               {/* DAYS */}
-              <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full border border-[#dcb45e]/35 bg-black/40 flex flex-col items-center justify-center text-center shadow-lg transition-transform duration-300 hover:border-[#dcb45e]">
+              <RevealItem variants={cardReveal} className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full border border-[#dcb45e]/35 bg-black/40 flex flex-col items-center justify-center text-center shadow-lg transition-transform duration-300 hover:border-[#dcb45e]">
                 <span className="font-serif text-2xl sm:text-3xl lg:text-4xl text-white font-normal leading-none">
                   {String(days).padStart(2, '0')}
                 </span>
                 <span className="text-[9px] sm:text-[10px] font-mono text-[#dcb45e] tracking-widest uppercase mt-1">
                   DAYS
                 </span>
-              </div>
+              </RevealItem>
 
               {/* HRS */}
-              <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full border border-[#dcb45e]/35 bg-black/40 flex flex-col items-center justify-center text-center shadow-lg transition-transform duration-300 hover:border-[#dcb45e]">
+              <RevealItem variants={cardReveal} className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full border border-[#dcb45e]/35 bg-black/40 flex flex-col items-center justify-center text-center shadow-lg transition-transform duration-300 hover:border-[#dcb45e]">
                 <span className="font-serif text-2xl sm:text-3xl lg:text-4xl text-white font-normal leading-none">
                   {String(hours).padStart(2, '0')}
                 </span>
                 <span className="text-[9px] sm:text-[10px] font-mono text-[#dcb45e] tracking-widest uppercase mt-1">
                   HRS
                 </span>
-              </div>
+              </RevealItem>
 
               {/* MINS */}
-              <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full border border-[#dcb45e]/35 bg-black/40 flex flex-col items-center justify-center text-center shadow-lg transition-transform duration-300 hover:border-[#dcb45e]">
+              <RevealItem variants={cardReveal} className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full border border-[#dcb45e]/35 bg-black/40 flex flex-col items-center justify-center text-center shadow-lg transition-transform duration-300 hover:border-[#dcb45e]">
                 <span className="font-serif text-2xl sm:text-3xl lg:text-4xl text-white font-normal leading-none">
                   {String(minutes).padStart(2, '0')}
                 </span>
                 <span className="text-[9px] sm:text-[10px] font-mono text-[#dcb45e] tracking-widest uppercase mt-1">
                   MINS
                 </span>
-              </div>
+              </RevealItem>
 
               {/* SECS */}
-              <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full border border-[#dcb45e]/35 bg-black/40 flex flex-col items-center justify-center text-center shadow-lg transition-transform duration-300 hover:border-[#dcb45e]">
+              <RevealItem variants={cardReveal} className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full border border-[#dcb45e]/35 bg-black/40 flex flex-col items-center justify-center text-center shadow-lg transition-transform duration-300 hover:border-[#dcb45e]">
                 <span className="font-serif text-2xl sm:text-3xl lg:text-4xl text-white font-normal leading-none">
                   {String(seconds).padStart(2, '0')}
                 </span>
                 <span className="text-[9px] sm:text-[10px] font-mono text-[#dcb45e] tracking-widest uppercase mt-1">
                   SECS
                 </span>
-              </div>
+              </RevealItem>
 
-            </div>
+            </RevealGroup>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
-              <a
-                href="#contact"
-                className="w-full sm:w-auto px-8 py-4 bg-[#dfbd75] hover:bg-[#dcb45e] text-black text-xs font-mono font-bold tracking-[0.14em] uppercase transition-colors duration-300 text-center shadow-md"
-              >
-                REQUEST AN INVITATION
-              </a>
+            <RevealItem variants={fadeRight}>
+              <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
+                <a
+                  href="#contact"
+                  className="w-full sm:w-auto px-8 py-4 bg-[#dfbd75] hover:bg-[#dcb45e] text-black text-xs font-mono font-bold tracking-[0.14em] uppercase transition-colors duration-300 text-center shadow-md"
+                >
+                  REQUEST AN INVITATION
+                </a>
 
-              <a
-                href="#contact"
-                className="w-full sm:w-auto px-8 py-4 bg-transparent border border-[#dcb45e]/60 hover:bg-[#dcb45e]/10 text-[#dcb45e] hover:text-white text-xs font-mono font-semibold tracking-[0.14em] uppercase transition-colors duration-300 text-center"
-              >
-                EXHIBIT WITH US
-              </a>
-            </div>
+                <a
+                  href="#contact"
+                  className="w-full sm:w-auto px-8 py-4 bg-transparent border border-[#dcb45e]/60 hover:bg-[#dcb45e]/10 text-[#dcb45e] hover:text-white text-xs font-mono font-semibold tracking-[0.14em] uppercase transition-colors duration-300 text-center"
+                >
+                  EXHIBIT WITH US
+                </a>
+              </div>
+            </RevealItem>
 
-          </motion.div>
+          </ScrollReveal>
 
         </div>
 
@@ -140,3 +143,4 @@ export default function EventHero() {
     </section>
   );
 }
+

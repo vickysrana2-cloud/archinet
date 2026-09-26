@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { ScrollReveal } from '../animations/ScrollReveal';
 
 export interface FixedBackgroundSectionProps {
   image: string;
@@ -53,9 +54,10 @@ export default function FixedBackgroundSection({
       )}
 
       {/* Foreground Content Layer */}
-      <div className="relative z-10 w-full min-h-full flex flex-col justify-center items-center md:pt-0 -mt-[100svh] md:mt-0">
+      <ScrollReveal className="relative z-10 w-full min-h-full flex flex-col justify-center items-center md:pt-0 -mt-[100svh] md:mt-0">
         {children}
-      </div>
+      </ScrollReveal>
     </section>
   );
 }
+
