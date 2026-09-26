@@ -6,9 +6,25 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ScrollReveal, RevealItem } from '../animations/ScrollReveal';
 import { fadeRight, imageReveal } from '../animations/motionVariants';
 
+const TESTIMONIAL_VIDEOS = [
+  {
+    id: 'video-1',
+    videoId: 'NSAOrGb9orM',
+    label: 'VIDEO 01',
+    title: 'Attendee Testimonial Reel 1',
+  },
+  {
+    id: 'video-2',
+    videoId: '9iDXWx7GtZQ',
+    label: 'VIDEO 02',
+    title: 'Attendee Testimonial Reel 2',
+  },
+];
+
 export default function TestimonialsSection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [cardStep, setCardStep] = useState(384);
+  const [activeVideoIndex, setActiveVideoIndex] = useState(0);
 
   const total = TESTIMONIALS_DATA.length;
 
@@ -39,6 +55,9 @@ export default function TestimonialsSection() {
   // Append first item to the end for seamless wrap rendering on desktop
   const extendedDesktopData = [...TESTIMONIALS_DATA, TESTIMONIALS_DATA[0]];
 
+  const currentVid = TESTIMONIAL_VIDEOS[activeVideoIndex];
+  const iframeSrc = `https://www.youtube.com/embed/${currentVid.videoId}?autoplay=1&mute=1&loop=1&playlist=${currentVid.videoId}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&playsinline=1`;
+
   return (
     <section
       id="testimonials"
@@ -47,58 +66,58 @@ export default function TestimonialsSection() {
       <div className="grid min-h-[720px] w-full grid-cols-1 lg:grid-cols-2">
 
         {/* =========================================================
-            LEFT — 50% CINEMATIC MONOCHROME IMAGE
+            LEFT — 50% MULTI-VIDEO COVER YOUTUBE PLAYER
         ========================================================= */}
         <ScrollReveal
           variants={imageReveal}
           className="
             relative
-            min-h-[360px]
+            min-h-[380px]
+            sm:min-h-[480px]
+            lg:min-h-[720px]
             w-full
             overflow-hidden
-            lg:min-h-[720px]
+            bg-black
+            flex
+            flex-col
+            justify-end
+            p-4
+            sm:p-6
           "
         >
-          <div
-            className="
-              absolute
-              inset-0
-              bg-cover
-              bg-center
-              bg-no-repeat
-            "
-            style={{
-              backgroundImage: "url('/images/audience-hero.jpg')",
-              filter: 'grayscale(100%) contrast(120%) brightness(36%)',
-            }}
-          />
+          {/* Cover-Fit Autoplay YouTube iFrame (Hides controls & channel info) */}
+          <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+            <iframe
+              key={currentVid.videoId}
+              src={iframeSrc}
+              title={currentVid.title}
+              className="absolute top-1/2 left-1/2 w-[220%] h-[220%] -translate-x-1/2 -translate-y-1/2 border-0 pointer-events-none object-cover"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
+          </div>
 
-          {/* Desktop gradient fade to right background */}
-          <div
-            className="
-              absolute
-              inset-0
-              hidden
-              bg-gradient-to-r
-              from-transparent
-              via-black/45
-              to-[#050505]
-              lg:block
-            "
-          />
-
-          {/* Mobile gradient fade to bottom background */}
-          <div
-            className="
-              absolute
-              inset-0
-              bg-gradient-to-t
-              from-[#050505]
-              via-transparent
-              to-transparent
-              lg:hidden
-            "
-          />
+          {/* Floating Video Switcher Bar */}
+          <div className="relative z-20 flex items-center justify-start gap-2 bg-[#050505]/80 backdrop-blur-md p-2.5 rounded-xl border border-white/10 w-fit max-w-full shadow-2xl">
+            <span className="text-[10px] font-mono tracking-widest text-[#dcb45e] uppercase px-1 hidden sm:inline">
+              FEATURED VIDEOS:
+            </span>
+            {TESTIMONIAL_VIDEOS.map((vid, idx) => (
+              <button
+                key={vid.id}
+                type="button"
+                onClick={() => setActiveVideoIndex(idx)}
+                className={`px-3 py-1 text-[11px] font-mono tracking-wider uppercase rounded-lg border transition-all duration-300 ${
+                  activeVideoIndex === idx
+                    ? 'border-[#dcb45e] bg-[#dcb45e] text-black font-bold shadow-md'
+                    : 'border-white/20 bg-black/60 text-white/80 hover:border-white/50 hover:text-white'
+                }`}
+              >
+                {vid.label}
+              </button>
+            ))}
+          </div>
         </ScrollReveal>
 
         {/* =========================================================

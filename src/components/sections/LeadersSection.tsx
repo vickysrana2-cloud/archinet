@@ -60,15 +60,15 @@ export default function LeadersSection() {
           </RevealItem>
         </ScrollReveal>
 
-        {/* Mobile View: Coverflow Carousel with Left & Right Side Cards Peek & Arrows */}
-        <div className="block lg:hidden w-full overflow-hidden">
-          <div className="relative w-full flex items-center justify-center min-h-[420px]">
+        {/* Mobile View: Smooth Coverflow Carousel with Left & Right Side Cards Peek & Arrows */}
+        <div className="block lg:hidden w-full overflow-hidden relative">
+          <div className="relative w-full flex items-center justify-center h-[460px] py-2">
             
             {/* Left Floating Arrow Button */}
             <button
               type="button"
               onClick={handlePrev}
-              className="absolute left-1 z-30 w-11 h-11 rounded-full border border-[#dcb45e]/40 hover:border-[#dcb45e] bg-black/60 backdrop-blur-sm text-[#dcb45e] flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
+              className="absolute left-1.5 top-[43%] -translate-y-1/2 z-30 w-9 h-9 rounded-full border border-[#dcb45e]/50 hover:border-[#dcb45e] bg-black/80 backdrop-blur-md text-[#dcb45e] flex items-center justify-center transition-all duration-300 active:scale-95 shadow-xl"
               aria-label="Previous leader"
             >
               <ChevronLeft className="w-5 h-5 stroke-[1.5]" />
@@ -78,45 +78,50 @@ export default function LeadersSection() {
             <button
               type="button"
               onClick={handleNext}
-              className="absolute right-1 z-30 w-11 h-11 rounded-full border border-[#dcb45e]/40 hover:border-[#dcb45e] bg-black/60 backdrop-blur-sm text-[#dcb45e] flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
+              className="absolute right-1.5 top-[43%] -translate-y-1/2 z-30 w-9 h-9 rounded-full border border-[#dcb45e]/50 hover:border-[#dcb45e] bg-black/80 backdrop-blur-md text-[#dcb45e] flex items-center justify-center transition-all duration-300 active:scale-95 shadow-xl"
               aria-label="Next leader"
             >
               <ChevronRight className="w-5 h-5 stroke-[1.5]" />
             </button>
 
-            {/* Cards Coverflow Track */}
-            <div className="flex items-center justify-center gap-3 w-full px-1 overflow-hidden py-4">
-              {[prev, active, next].map((itemIndex, positionIdx) => {
-                const isCenter = positionIdx === 1;
-                const leader = LEADERS_DATA[itemIndex];
+            {/* Perfect Dead-Centered Cards Container */}
+            <div className="relative w-full h-full overflow-hidden">
+              {LEADERS_DATA.map((leader, idx) => {
+                let offset = idx - activeIndex;
+                if (offset > LEADERS_DATA.length / 2) offset -= LEADERS_DATA.length;
+                if (offset < -LEADERS_DATA.length / 2) offset += LEADERS_DATA.length;
+
+                const isActive = offset === 0;
 
                 return (
                   <motion.div
                     key={leader.id}
-                    layout
-                    initial={{ opacity: 0, scale: 0.85 }}
+                    initial={false}
                     animate={{
-                      opacity: isCenter ? 1 : 0.4,
-                      scale: isCenter ? 1.02 : 0.84,
-                      filter: isCenter ? 'blur(0px)' : 'blur(0.5px)'
+                      x: `calc(-50% + ${offset * 270}px)`,
+                      scale: isActive ? 1 : 0.84,
+                      opacity: isActive ? 1 : 0.35,
                     }}
-                    transition={{
-                      type: 'spring',
-                      stiffness: 200,
-                      damping: 24,
-                      opacity: { duration: 0.5 }
-                    }}
-                    onClick={() => {
-                      if (!isCenter) {
-                        setActiveIndex(itemIndex);
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    onClick={() => setActiveIndex(idx)}
+                    className={`
+                      absolute
+                      top-1
+                      left-1/2
+                      w-[250px]
+                      sm:w-[270px]
+                      rounded-2xl
+                      bg-[#0a0a0a]
+                      p-3.5
+                      cursor-pointer
+                      select-none
+                      overflow-hidden
+                      ${
+                        isActive
+                          ? 'border-2 border-[#dcb45e] shadow-[0_0_35px_rgba(220,180,94,0.18)] z-20'
+                          : 'border border-white/10 z-10'
                       }
-                    }}
-                    className={[
-                      "shrink-0 rounded-2xl bg-[#0a0a0a] p-3.5 cursor-pointer select-none relative overflow-hidden transition-all duration-300",
-                      isCenter
-                        ? "w-[75vw] max-w-[310px] border-2 border-[#dcb45e] shadow-[0_0_35px_rgba(220,180,94,0.18)] z-20"
-                        : "w-[50vw] max-w-[200px] border border-white/10 z-10 hover:opacity-75"
-                    ].join(" ")}
+                    `}
                   >
                     {/* Card Image */}
                     <div className="relative aspect-[3/4] rounded-xl overflow-hidden bg-black/60 mb-3.5">
@@ -128,7 +133,7 @@ export default function LeadersSection() {
                     </div>
 
                     {/* Leader Information */}
-                    <div className="px-1 pb-1">
+                    <div className="px-1 pb-1 text-left">
                       <h3 className="font-serif text-lg text-white font-medium truncate">
                         {leader.name}
                       </h3>
@@ -147,13 +152,13 @@ export default function LeadersSection() {
           </div>
 
           {/* Indicator Pagination Capsular Dots */}
-          <div className="flex items-center justify-center gap-2 mt-6">
+          <div className="flex items-center justify-center gap-2 mt-2">
             {LEADERS_DATA.map((leader, idx) => (
               <button
                 key={leader.id}
                 type="button"
                 onClick={() => setActiveIndex(idx)}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
+                className={`h-1.5 rounded-full transition-all duration-500 ${
                   activeIndex === idx ? 'w-6 bg-[#dcb45e]' : 'w-1.5 bg-white/20'
                 }`}
                 aria-label={`Go to ${leader.name}`}

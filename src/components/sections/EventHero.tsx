@@ -1,32 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { EVENT_DATA } from '../../data';
 import { useCountdown } from '../../hooks/useCountdown';
 import { ScrollReveal, RevealItem, RevealGroup } from '../animations/ScrollReveal';
 import { fadeLeft, fadeRight, fadeUp, imageReveal, cardReveal } from '../animations/motionVariants';
 
-const EVENT_VIDEOS = [
-  {
-    id: 'video-1',
-    videoId: 'NSAOrGb9orM',
-    label: 'VIDEO 01',
-    title: 'ArchiNet 14th Edition Highlight Reel 1',
-  },
-  {
-    id: 'video-2',
-    videoId: '9iDXWx7GtZQ',
-    label: 'VIDEO 02',
-    title: 'ArchiNet 14th Edition Highlight Reel 2',
-  },
-];
-
 export default function EventHero() {
   const { days, hours, minutes, seconds } = useCountdown(EVENT_DATA.targetDateISO);
-  const [activeVideoIndex, setActiveVideoIndex] = useState(0);
-
-  const currentVid = EVENT_VIDEOS[activeVideoIndex];
-  const iframeSrc = `https://www.youtube.com/embed/${currentVid.videoId}?autoplay=1&mute=1&loop=1&playlist=${currentVid.videoId}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&playsinline=1`;
 
   return (
     <section 
@@ -37,46 +18,20 @@ export default function EventHero() {
       <div id="14th-edition" className="absolute top-0 left-0" />
       <div className="w-full min-h-[620px] lg:min-h-[700px] grid grid-cols-1 lg:grid-cols-12 items-stretch">
         
-        {/* =========================================================
-            LEFT COLUMN: FULL-PANEL COVER AUTOPLAYING YOUTUBE VIDEO
-        ========================================================= */}
+        {/* Left Column: Full-Height Dark Monochrome Audience Photo (Enters from Left) */}
         <ScrollReveal 
           variants={imageReveal}
-          className="lg:col-span-6 relative min-h-[380px] sm:min-h-[480px] lg:min-h-full w-full overflow-hidden bg-black flex flex-col justify-end p-4 sm:p-6"
+          className="lg:col-span-6 relative min-h-[350px] sm:min-h-[450px] lg:min-h-full w-full overflow-hidden"
         >
-          {/* Cover-Fit Autoplay YouTube iFrame (Hides controls & channel info) */}
-          <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
-            <iframe
-              key={currentVid.videoId}
-              src={iframeSrc}
-              title={currentVid.title}
-              className="absolute top-1/2 left-1/2 w-[220%] h-[220%] -translate-x-1/2 -translate-y-1/2 border-0 pointer-events-none object-cover"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            />
-          </div>
-
-          {/* Floating Video Switcher Bar at Bottom */}
-          <div className="relative z-20 flex items-center justify-start gap-2 bg-[#050505]/80 backdrop-blur-md p-2.5 rounded-xl border border-white/10 w-fit max-w-full shadow-2xl">
-            <span className="text-[10px] font-mono tracking-widest text-[#dcb45e] uppercase px-1 hidden sm:inline">
-              VIDEOS:
-            </span>
-            {EVENT_VIDEOS.map((vid, idx) => (
-              <button
-                key={vid.id}
-                type="button"
-                onClick={() => setActiveVideoIndex(idx)}
-                className={`px-3 py-1 text-[11px] font-mono tracking-wider uppercase rounded-lg border transition-all duration-300 ${
-                  activeVideoIndex === idx
-                    ? 'border-[#dcb45e] bg-[#dcb45e] text-black font-bold shadow-md'
-                    : 'border-white/20 bg-black/60 text-white/80 hover:border-white/50 hover:text-white'
-                }`}
-              >
-                {vid.label}
-              </button>
-            ))}
-          </div>
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000 hover:scale-105"
+            style={{
+              backgroundImage: `url('/images/audience-hero.jpg')`,
+              filter: 'grayscale(100%) contrast(120%) brightness(48%)'
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-[#050505] hidden lg:block" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent lg:hidden" />
         </ScrollReveal>
 
         {/* =========================================================
