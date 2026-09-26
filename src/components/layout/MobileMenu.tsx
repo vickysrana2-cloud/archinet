@@ -31,7 +31,7 @@ export default function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProp
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#070707] flex flex-col justify-between p-8 border-b border-[var(--accent-gold)]/20 animate-in fade-in duration-300">
+    <div className="fixed inset-0 z-[110] bg-[#070707] flex flex-col justify-between p-8 border-b border-[var(--accent-gold)]/20 animate-in fade-in duration-300">
       
       {/* Top Header */}
       <div className="flex items-center justify-between">

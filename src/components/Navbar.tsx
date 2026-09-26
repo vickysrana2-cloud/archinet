@@ -20,7 +20,7 @@ export default function Navbar({ onOpenSubmit, activeSection, setActiveSection }
   ];
 
   return (
-    <header className="sticky top-0 z-40 w-full glass-panel border-b border-[var(--border-light)] px-4 lg:px-8 py-3.5 transition-all">
+    <header className="sticky top-0 z-[100] w-full glass-panel border-b border-[var(--border-light)] px-4 lg:px-8 py-3.5 transition-all">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         
         {/* Brand Logo */}

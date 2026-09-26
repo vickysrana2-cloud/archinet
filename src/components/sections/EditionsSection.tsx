@@ -37,7 +37,7 @@ export default function EditionsSection() {
   };
 
   return (
-    <section id="editions" className="w-full bg-[#050505] text-[#f4f2ed] border-t border-white/[0.06] overflow-hidden">
+    <section id="editions" className="relative z-10 w-full bg-[#050505] text-[#f4f2ed] border-t border-white/[0.06] overflow-hidden">
       
       {/* 1. Compact Section Header / Navigation Bar (~70-75px height) */}
       <div className="w-full h-[72px] px-6 sm:px-10 lg:px-12 border-b border-white/[0.06] flex items-center justify-between">
@@ -89,7 +89,7 @@ export default function EditionsSection() {
             <button
               type="button"
               onClick={handlePrev}
-              className="absolute left-1 sm:left-4 lg:left-10 xl:left-16 top-1/2 -translate-y-1/2 z-40 w-10 h-10 sm:w-13 sm:h-13 rounded-full border border-[#dcb45e]/60 hover:border-[#dcb45e] bg-[#090909]/90 text-[#dcb45e] flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 shadow-xl"
+              className="absolute left-1 sm:left-4 lg:left-10 xl:left-16 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-13 sm:h-13 rounded-full border border-[#dcb45e]/60 hover:border-[#dcb45e] bg-[#090909]/90 text-[#dcb45e] flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 shadow-xl"
               aria-label="Previous edition"
             >
               <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.75]" />
@@ -99,7 +99,7 @@ export default function EditionsSection() {
             <button
               type="button"
               onClick={handleNext}
-              className="absolute right-1 sm:right-4 lg:left-auto lg:right-10 xl:right-16 top-1/2 -translate-y-1/2 z-40 w-10 h-10 sm:w-13 sm:h-13 rounded-full border border-[#dcb45e]/60 hover:border-[#dcb45e] bg-[#090909]/90 text-[#dcb45e] flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 shadow-xl"
+              className="absolute right-1 sm:right-4 lg:left-auto lg:right-10 xl:right-16 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-13 sm:h-13 rounded-full border border-[#dcb45e]/60 hover:border-[#dcb45e] bg-[#090909]/90 text-[#dcb45e] flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 shadow-xl"
               aria-label="Next edition"
             >
               <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.75]" />
@@ -141,7 +141,7 @@ export default function EditionsSection() {
                     className={[
                       "shrink-0 cursor-pointer select-none rounded-[20px] overflow-hidden relative",
                       isCenter
-                        ? "w-[74vw] max-w-[310px] sm:w-[490px] lg:w-[380px] xl:w-[390px] bg-[#080808] border border-[#dcb45e]/60 shadow-[0_0_40px_rgba(190,150,60,0.12)] p-3 sm:p-5 z-30 relative"
+                        ? "w-[74vw] max-w-[310px] sm:w-[490px] lg:w-[380px] xl:w-[390px] bg-[#080808] border border-[#dcb45e]/60 shadow-[0_0_40px_rgba(190,150,60,0.12)] p-3 sm:p-5 z-20 relative"
                         : "w-[70vw] max-w-[285px] sm:w-[460px] lg:w-[350px] xl:w-[360px] bg-[#0a0a0a] border border-white/10 p-3 sm:p-5 hover:opacity-75 z-10 relative"
                     ].join(" ")}
                   >
