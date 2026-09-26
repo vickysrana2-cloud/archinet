@@ -20,33 +20,31 @@ export default function HeroSectionVideo() {
       aria-label="Archinet featured architectural summit hero"
     >
       {/* =========================================================
-          BACKGROUND YOUTUBE VIDEO
+          BACKGROUND MP4 VIDEO (assets/videos/hero_section_video.mp4)
       ========================================================== */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
-        <iframe
-          src="https://www.youtube.com/embed/yg8snqiv1o0?autoplay=1&mute=1&controls=0&start=0&end=10&loop=1&playlist=yg8snqiv1o0&rel=0&disablekb=1&modestbranding=1&iv_load_policy=3&playsinline=1"
-          title="ArchiNet Hero Background Video"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          tabIndex={-1}
-          aria-hidden="true"
-          className="absolute top-1/2 left-1/2 w-[300%] h-[300%] min-w-[100vw] min-h-[100vh] -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
           style={{
-            filter: "grayscale(70%) contrast(115%) brightness(48%)",
+            filter: "brightness(92%) contrast(105%)",
           }}
-        />
+        >
+          <source src="/assets/videos/hero_section_video.mp4" type="video/mp4" />
+        </video>
       </div>
 
       {/* =========================================================
-          DARK CINEMATIC OVERLAYS & VIGNETTE
+          LIGHT CINEMATIC OVERLAYS & VIGNETTE
       ========================================================== */}
-      {/* Dark tint overlay */}
-      <div className="absolute inset-0 bg-black/50 pointer-events-none" />
+      {/* Light subtle tint overlay for text legibility */}
+      <div className="absolute inset-0 bg-black/20 pointer-events-none" />
 
-      {/* Top and Bottom vertical gradient overlays for seamless header & section blending */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-[#050505] pointer-events-none" />
-
-      {/* Radial vignette overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(5,5,5,0.35)_50%,rgba(5,5,5,0.85)_100%)] pointer-events-none" />
+      {/* Soft vertical gradient overlay for header & footer blending */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-[#050505] pointer-events-none" />
 
       {/* =========================================================
           LEFT FEATURED INDICATOR (EDITORIAL SIDEBAR)

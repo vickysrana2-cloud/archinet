@@ -6,23 +6,17 @@ import { ScrollReveal } from '../animations/ScrollReveal';
 import { scaleIn } from '../animations/motionVariants';
 
 export default function HeroVideo() {
-  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
 
   const togglePlayPause = () => {
-    if (!iframeRef.current || !iframeRef.current.contentWindow) return;
+    if (!videoRef.current) return;
 
     if (isPlaying) {
-      iframeRef.current.contentWindow.postMessage(
-        JSON.stringify({ event: 'command', func: 'pauseVideo', args: '' }),
-        '*'
-      );
+      videoRef.current.pause();
       setIsPlaying(false);
     } else {
-      iframeRef.current.contentWindow.postMessage(
-        JSON.stringify({ event: 'command', func: 'playVideo', args: '' }),
-        '*'
-      );
+      videoRef.current.play();
       setIsPlaying(true);
     }
   };
@@ -46,25 +40,25 @@ export default function HeroVideo() {
   return (
     <section className="relative w-full h-[70vh] min-h-[480px] sm:min-h-[540px] flex items-center justify-center overflow-hidden bg-[#050505]">
       
-      {/* Background YouTube Video (20 Seconds Loop) */}
+      {/* Background MP4 Video (assets/videos/hero_section_video.mp4) */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
-        <iframe
-          ref={iframeRef}
-          src="https://www.youtube.com/embed/yg8snqiv1o0?autoplay=1&mute=1&controls=0&start=0&end=20&loop=1&playlist=yg8snqiv1o0&rel=0&disablekb=1&modestbranding=1&iv_load_policy=3&playsinline=1&enablejsapi=1"
-          title="ArchiNet Showcase Video"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          tabIndex={-1}
-          aria-hidden="true"
-          className="absolute top-1/2 left-1/2 w-[300%] h-[300%] min-w-[100vw] min-h-[100vh] -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
           style={{
-            filter: 'grayscale(100%) contrast(120%) brightness(38%)'
+            filter: 'brightness(92%) contrast(105%)'
           }}
-        />
+        >
+          <source src="/assets/videos/hero_section_video.mp4" type="video/mp4" />
+        </video>
       </div>
 
-      {/* Dark Vignette & Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#070707] via-black/30 to-[#070707] pointer-events-none" />
-      <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+      {/* Light Cinematic Overlays */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#070707] via-transparent to-[#070707]/60 pointer-events-none" />
 
       {/* Centered Circular STAY TUNED / PLAY-PAUSE Badge */}
       <div className="relative z-20 flex items-center justify-center text-center">
