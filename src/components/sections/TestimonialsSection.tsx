@@ -8,16 +8,34 @@ import { fadeRight, imageReveal } from '../animations/motionVariants';
 
 const TESTIMONIAL_VIDEOS = [
   {
-    id: 'video-1',
-    videoId: 'NSAOrGb9orM',
+    id: 'reel-1',
     label: 'VIDEO 01',
-    title: 'Attendee Testimonial Reel 1',
+    title: 'Attendee Testimonial Video 1',
+    instagramUrl: 'https://www.instagram.com/reel/DBniDsbNyxm/',
   },
   {
-    id: 'video-2',
-    videoId: '9iDXWx7GtZQ',
+    id: 'reel-2',
     label: 'VIDEO 02',
-    title: 'Attendee Testimonial Reel 2',
+    title: 'Attendee Testimonial Video 2',
+    instagramUrl: 'https://www.instagram.com/reel/DNx87YjZGsw/',
+  },
+  {
+    id: 'reel-3',
+    label: 'VIDEO 03',
+    title: 'Attendee Testimonial Video 3',
+    instagramUrl: 'https://www.instagram.com/reel/DBf7A2rAF7H/',
+  },
+  {
+    id: 'reel-4',
+    label: 'VIDEO 04',
+    title: 'Attendee Testimonial Video 4',
+    instagramUrl: 'https://www.instagram.com/reel/DBfo7m1gMQo/',
+  },
+  {
+    id: 'reel-5',
+    label: 'VIDEO 05',
+    title: 'Attendee Testimonial Video 5',
+    instagramUrl: 'https://www.instagram.com/reel/DBfprVzAK6O/',
   },
 ];
 
@@ -41,6 +59,24 @@ export default function TestimonialsSection() {
     return () => window.removeEventListener('resize', updateStep);
   }, []);
 
+  // Load Instagram Embed Script once
+  useEffect(() => {
+    if (!document.getElementById('instagram-embed-script')) {
+      const script = document.createElement('script');
+      script.id = 'instagram-embed-script';
+      script.src = 'https://www.instagram.com/embed.js';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
+
+  // Re-process Instagram embeds when active Reel changes
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).instgrm?.Embeds) {
+      (window as any).instgrm.Embeds.process();
+    }
+  }, [activeVideoIndex]);
+
   const goToSlide = (index: number) => {
     setActiveIndex(index);
   };
@@ -56,7 +92,7 @@ export default function TestimonialsSection() {
   const extendedDesktopData = [...TESTIMONIALS_DATA, TESTIMONIALS_DATA[0]];
 
   const currentVid = TESTIMONIAL_VIDEOS[activeVideoIndex];
-  const iframeSrc = `https://www.youtube.com/embed/${currentVid.videoId}?autoplay=1&mute=1&loop=1&playlist=${currentVid.videoId}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&playsinline=1`;
+  const embedIframeUrl = `${currentVid.instagramUrl.replace(/\/$/, '')}/embed`;
 
   return (
     <section
@@ -66,49 +102,45 @@ export default function TestimonialsSection() {
       <div className="grid min-h-[720px] w-full grid-cols-1 lg:grid-cols-2">
 
         {/* =========================================================
-            LEFT — 50% MULTI-VIDEO COVER YOUTUBE PLAYER
+            LEFT — 50% INSTAGRAM REELS EMBED PLAYER
         ========================================================= */}
         <ScrollReveal
           variants={imageReveal}
           className="
             relative
-            min-h-[380px]
-            sm:min-h-[480px]
+            min-h-[500px]
+            sm:min-h-[580px]
             lg:min-h-[720px]
             w-full
             overflow-hidden
-            bg-black
+            bg-[#050505]
             flex
             flex-col
-            justify-end
+            items-center
+            justify-center
             p-4
             sm:p-6
           "
         >
-          {/* Cover-Fit Autoplay YouTube iFrame (Hides controls & channel info) */}
-          <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+          {/* Instagram Reel Container */}
+          <div className="relative w-full max-w-[350px] h-[480px] sm:h-[540px] lg:h-[600px] rounded-2xl overflow-hidden border border-[#dcb45e]/35 shadow-[0_0_35px_rgba(220,180,94,0.15)] bg-black flex items-center justify-center">
             <iframe
-              key={currentVid.videoId}
-              src={iframeSrc}
+              key={currentVid.id}
+              src={embedIframeUrl}
               title={currentVid.title}
-              className="absolute top-1/2 left-1/2 w-[220%] h-[220%] -translate-x-1/2 -translate-y-1/2 border-0 pointer-events-none object-cover"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
+              className="w-full h-full border-0 pointer-events-auto"
+              allow="encrypted-media; clipboard-write; picture-in-picture; web-share"
             />
           </div>
 
           {/* Floating Video Switcher Bar */}
-          <div className="relative z-20 flex items-center justify-start gap-2 bg-[#050505]/80 backdrop-blur-md p-2.5 rounded-xl border border-white/10 w-fit max-w-full shadow-2xl">
-            <span className="text-[10px] font-mono tracking-widest text-[#dcb45e] uppercase px-1 hidden sm:inline">
-              FEATURED VIDEOS:
-            </span>
+          <div className="relative z-20 mt-4 flex flex-wrap items-center justify-center gap-1.5 bg-[#050505]/90 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 max-w-full shadow-2xl">
             {TESTIMONIAL_VIDEOS.map((vid, idx) => (
               <button
                 key={vid.id}
                 type="button"
                 onClick={() => setActiveVideoIndex(idx)}
-                className={`px-3 py-1 text-[11px] font-mono tracking-wider uppercase rounded-lg border transition-all duration-300 ${
+                className={`px-2.5 py-1 text-[10px] sm:text-[11px] font-mono tracking-wider uppercase rounded-full border transition-all duration-300 ${
                   activeVideoIndex === idx
                     ? 'border-[#dcb45e] bg-[#dcb45e] text-black font-bold shadow-md'
                     : 'border-white/20 bg-black/60 text-white/80 hover:border-white/50 hover:text-white'
