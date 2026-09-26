@@ -57,7 +57,14 @@ export default function Footer() {
 
       <ScrollReveal variants={fadeUp} className="max-w-7xl mx-auto pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] font-mono text-[var(--text-muted)] gap-4">
         <span>© 2026 Riverstone Networking Services. All rights reserved.</span>
-        <span className="tracking-widest uppercase text-[var(--accent-gold)] font-medium">DESIGNED FOR CONNECTION</span>
+        <div className="flex items-center gap-2 whitespace-nowrap">
+          <span className="font-sans text-[14px] sm:text-[15px] font-normal text-[#e5e2db]">Managed by</span>
+          <img
+            src="https://unicladsurface.com/_next/image?url=%2Fhome%2FSalesUpBlackBg.png&w=640&q=75"
+            alt="SalesUp"
+            className="h-6 sm:h-7 w-auto object-contain"
+          />
+        </div>
       </ScrollReveal>
     </footer>
   );
