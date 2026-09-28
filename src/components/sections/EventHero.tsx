@@ -3,8 +3,14 @@
 import React from 'react';
 import { EVENT_DATA } from '../../data';
 import { useCountdown } from '../../hooks/useCountdown';
-import { ScrollReveal, RevealItem, RevealGroup } from '../animations/ScrollReveal';
-import { fadeLeft, fadeRight, fadeUp, imageReveal, cardReveal } from '../animations/motionVariants';
+import {
+  RevealTitle,
+  RevealLeft,
+  RevealRight,
+  RevealZoom,
+  StaggerContainer,
+  StaggerItem,
+} from '../animations/ScrollReveal';
 
 export default function EventHero() {
   const { days, hours, minutes, seconds } = useCountdown(EVENT_DATA.targetDateISO);
@@ -19,10 +25,7 @@ export default function EventHero() {
       <div className="w-full min-h-[620px] lg:min-h-[700px] grid grid-cols-1 lg:grid-cols-12 items-stretch">
         
         {/* Left Column: Full-Height Dark Monochrome Audience Photo (Enters from Left) */}
-        <ScrollReveal 
-          variants={imageReveal}
-          className="lg:col-span-6 relative min-h-[350px] sm:min-h-[450px] lg:min-h-full w-full overflow-hidden"
-        >
+        <RevealLeft className="lg:col-span-6 relative min-h-[350px] sm:min-h-[450px] lg:min-h-full w-full overflow-hidden">
           <div 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000 hover:scale-105"
             style={{
@@ -32,7 +35,7 @@ export default function EventHero() {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-[#050505] hidden lg:block" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent lg:hidden" />
-        </ScrollReveal>
+        </RevealLeft>
 
         {/* =========================================================
             RIGHT COLUMN: EVENT CONTENT, COUNTDOWN & CTAs
@@ -47,79 +50,76 @@ export default function EventHero() {
             14
           </span>
 
-          <ScrollReveal 
-            staggerChildren={0.08}
-            className="relative z-10 flex flex-col gap-7 max-w-xl"
-          >
+          <div className="relative z-10 flex flex-col gap-7 max-w-xl">
             
             {/* Eyebrow */}
-            <RevealItem variants={fadeRight}>
+            <RevealTitle>
               <span className="text-xs font-mono tracking-[0.35em] text-[#dcb45e] font-medium uppercase">
                 {EVENT_DATA.eyebrow || 'THE REFINED CHAPTER'}
               </span>
-            </RevealItem>
+            </RevealTitle>
 
             {/* Main Title */}
-            <RevealItem variants={fadeRight}>
+            <RevealRight delay={0.1}>
               <h2 className="font-serif text-5xl sm:text-7xl font-normal text-[#f4f0e8] tracking-tight leading-none">
                 14th Edition
               </h2>
-            </RevealItem>
+            </RevealRight>
 
             {/* Event Meta Line */}
-            <RevealItem variants={fadeRight}>
+            <RevealRight delay={0.15}>
               <p className="text-[11px] sm:text-xs font-mono text-[#dcb45e] tracking-[0.18em] uppercase leading-relaxed">
                 20 FEBRUARY 2027 <span className="mx-2 text-[#dcb45e]/60">•</span> THE ST. REGIS, MUMBAI <span className="mx-2 text-[#dcb45e]/60">•</span> BY INVITATION ONLY
               </p>
-            </RevealItem>
+            </RevealRight>
 
             {/* Circular Countdown Timers */}
-            <RevealGroup staggerChildren={0.08} className="grid grid-cols-4 gap-3 sm:gap-5 py-4">
+            <StaggerContainer staggerChildren={0.12} delayChildren={0.2} className="grid grid-cols-4 gap-3 sm:gap-5 py-4">
               
               {/* DAYS */}
-              <RevealItem variants={cardReveal} className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full border border-[#dcb45e]/35 bg-black/40 flex flex-col items-center justify-center text-center shadow-lg transition-transform duration-300 hover:border-[#dcb45e]">
+              <StaggerItem direction="scale" className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full border border-[#dcb45e]/35 bg-black/40 flex flex-col items-center justify-center text-center shadow-lg transition-transform duration-300 hover:border-[#dcb45e]">
                 <span className="font-serif text-2xl sm:text-3xl lg:text-4xl text-white font-normal leading-none">
                   {String(days).padStart(2, '0')}
                 </span>
                 <span className="text-[9px] sm:text-[10px] font-mono text-[#dcb45e] tracking-widest uppercase mt-1">
                   DAYS
                 </span>
-              </RevealItem>
+              </StaggerItem>
 
               {/* HRS */}
-              <RevealItem variants={cardReveal} className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full border border-[#dcb45e]/35 bg-black/40 flex flex-col items-center justify-center text-center shadow-lg transition-transform duration-300 hover:border-[#dcb45e]">
+              <StaggerItem direction="scale" className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full border border-[#dcb45e]/35 bg-black/40 flex flex-col items-center justify-center text-center shadow-lg transition-transform duration-300 hover:border-[#dcb45e]">
                 <span className="font-serif text-2xl sm:text-3xl lg:text-4xl text-white font-normal leading-none">
                   {String(hours).padStart(2, '0')}
                 </span>
                 <span className="text-[9px] sm:text-[10px] font-mono text-[#dcb45e] tracking-widest uppercase mt-1">
                   HRS
                 </span>
-              </RevealItem>
+              </StaggerItem>
 
               {/* MINS */}
-              <RevealItem variants={cardReveal} className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full border border-[#dcb45e]/35 bg-black/40 flex flex-col items-center justify-center text-center shadow-lg transition-transform duration-300 hover:border-[#dcb45e]">
+              <StaggerItem direction="scale" className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full border border-[#dcb45e]/35 bg-black/40 flex flex-col items-center justify-center text-center shadow-lg transition-transform duration-300 hover:border-[#dcb45e]">
                 <span className="font-serif text-2xl sm:text-3xl lg:text-4xl text-white font-normal leading-none">
                   {String(minutes).padStart(2, '0')}
                 </span>
                 <span className="text-[9px] sm:text-[10px] font-mono text-[#dcb45e] tracking-widest uppercase mt-1">
                   MINS
                 </span>
-              </RevealItem>
+              </StaggerItem>
 
               {/* SECS */}
-              <RevealItem variants={cardReveal} className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full border border-[#dcb45e]/35 bg-black/40 flex flex-col items-center justify-center text-center shadow-lg transition-transform duration-300 hover:border-[#dcb45e]">
+              <StaggerItem direction="scale" className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full border border-[#dcb45e]/35 bg-black/40 flex flex-col items-center justify-center text-center shadow-lg transition-transform duration-300 hover:border-[#dcb45e]">
                 <span className="font-serif text-2xl sm:text-3xl lg:text-4xl text-white font-normal leading-none">
                   {String(seconds).padStart(2, '0')}
                 </span>
                 <span className="text-[9px] sm:text-[10px] font-mono text-[#dcb45e] tracking-widest uppercase mt-1">
                   SECS
                 </span>
-              </RevealItem>
+              </StaggerItem>
 
-            </RevealGroup>
+            </StaggerContainer>
 
             {/* Action Buttons */}
-            <RevealItem variants={fadeRight}>
+            <RevealRight delay={0.35}>
               <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
                 <a
                   href="#contact"
@@ -135,9 +135,9 @@ export default function EventHero() {
                   EXHIBIT WITH US
                 </a>
               </div>
-            </RevealItem>
+            </RevealRight>
 
-          </ScrollReveal>
+          </div>
 
         </div>
 
@@ -145,5 +145,3 @@ export default function EventHero() {
     </section>
   );
 }
-
-

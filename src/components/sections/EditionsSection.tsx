@@ -4,8 +4,7 @@ import React, { useState } from 'react';
 import { EDITIONS_DATA } from '../../data';
 import { ChevronLeft, ChevronRight, Calendar, MapPin } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { ScrollReveal, RevealItem } from '../animations/ScrollReveal';
-import { fadeUp, scaleIn } from '../animations/motionVariants';
+import { RevealTitle, RevealUp, RevealZoom } from '../animations/ScrollReveal';
 
 export default function EditionsSection() {
   const [activeIndex, setActiveIndex] = useState(1); // Default to ITC Kohinoor (index 1)
@@ -43,22 +42,22 @@ export default function EditionsSection() {
       <div className="w-full py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col items-center">
         
         {/* 2. Centered Hero Typography */}
-        <ScrollReveal staggerChildren={0.08} className="text-center mb-10 sm:mb-14 max-w-3xl">
-          <RevealItem variants={fadeUp}>
+        <div className="text-center mb-10 sm:mb-14 max-w-3xl">
+          <RevealTitle>
             <h2 className="font-serif text-4xl sm:text-6xl lg:text-7xl text-[#f4f2ed] font-normal tracking-tight leading-tight">
               Built <span className="editorial-italic italic text-[#dcb45e] font-serif">Over Time.</span>
             </h2>
-          </RevealItem>
+          </RevealTitle>
 
-          <RevealItem variants={fadeUp}>
+          <RevealUp delay={0.15}>
             <p className="text-[11px] sm:text-xs font-sans text-[#a09e97] tracking-[0.3em] uppercase mt-3 sm:mt-4 font-medium max-w-xs sm:max-w-none mx-auto leading-relaxed">
               FROM ONE IDEA TO A CURATED DESIGN NETWORK
             </p>
-          </RevealItem>
-        </ScrollReveal>
+          </RevealUp>
+        </div>
 
         {/* 3. Coverflow Carousel */}
-        <ScrollReveal variants={scaleIn} className="relative w-full flex flex-col items-center overflow-x-hidden">
+        <RevealZoom delay={0.2} className="relative w-full flex flex-col items-center overflow-x-hidden">
           
           <div className="relative w-full flex items-center justify-center py-6 sm:py-8 lg:py-10 min-h-[480px] sm:min-h-[600px] lg:min-h-[460px]">
             
@@ -177,12 +176,10 @@ export default function EditionsSection() {
             ))}
           </div>
 
-        </ScrollReveal>
+        </RevealZoom>
 
       </div>
 
     </section>
   );
 }
-
-

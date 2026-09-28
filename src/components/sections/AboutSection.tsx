@@ -1,21 +1,24 @@
 'use client';
 
 import React from 'react';
-import { CheckCircle2, Play, ArrowUpRight, ShieldCheck, Sparkles } from 'lucide-react';
-import { ScrollReveal, RevealItem, RevealGroup } from '../animations/ScrollReveal';
-import { fadeLeft, fadeRight, fadeUp, imageReveal, cardReveal } from '../animations/motionVariants';
+import { CheckCircle2, Play, ShieldCheck, Sparkles } from 'lucide-react';
+import {
+  RevealTitle,
+  RevealLeft,
+  RevealRight,
+  RevealUp,
+  RevealZoom,
+  StaggerContainer,
+  StaggerItem,
+} from '../animations/ScrollReveal';
 
 export default function AboutSection() {
   return (
-    <section id="about" className="w-full py-24 lg:py-36 px-6 lg:px-12 bg-[#070707] border-b border-[rgba(255,255,255,0.06)]">
-      
+    <section id="about" className="w-full py-24 lg:py-36 px-6 lg:px-12 bg-[#070707] border-b border-[rgba(255,255,255,0.06)] overflow-hidden">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         
         {/* Left Column: Image with Floating Video Card (Enters from Left) */}
-        <ScrollReveal
-          variants={imageReveal}
-          className="lg:col-span-6 relative"
-        >
+        <RevealLeft className="lg:col-span-6 relative">
           {/* Main Large Image */}
           <div className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-[rgba(255,255,255,0.1)] shadow-2xl">
             <div
@@ -29,7 +32,7 @@ export default function AboutSection() {
           </div>
 
           {/* Floating Video Preview Card */}
-          <div className="absolute -bottom-6 -right-4 sm:bottom-8 sm:-right-8 w-64 sm:w-72 p-4 rounded-xl bg-[#0d0d0d]/90 backdrop-blur-md border border-[var(--accent-gold)]/50 shadow-2xl">
+          <RevealZoom delay={0.2} className="absolute -bottom-6 -right-4 sm:bottom-8 sm:-right-8 w-64 sm:w-72 p-4 rounded-xl bg-[#0d0d0d]/90 backdrop-blur-md border border-[var(--accent-gold)]/50 shadow-2xl">
             <div className="relative aspect-video rounded-lg overflow-hidden mb-3 bg-[#141414] group cursor-pointer flex items-center justify-center">
               <div
                 className="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform"
@@ -45,52 +48,49 @@ export default function AboutSection() {
             
             <span className="text-[10px] font-mono text-[var(--accent-gold)] tracking-widest uppercase block mb-1">PROMO REEL</span>
             <p className="text-xs font-serif text-white font-medium">Inside ArchiNet Summit Experience</p>
-          </div>
-        </ScrollReveal>
+          </RevealZoom>
+        </RevealLeft>
 
         {/* Right Column: Copy & Specs (Enters with staggered sequence) */}
-        <ScrollReveal
-          staggerChildren={0.09}
-          className="lg:col-span-6 flex flex-col gap-6"
-        >
-          <RevealItem variants={fadeRight}>
+        <div className="lg:col-span-6 flex flex-col gap-6">
+          <RevealTitle>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[rgba(197,168,128,0.1)] border border-[rgba(197,168,128,0.3)] w-fit">
               <span className="text-[11px] font-mono tracking-widest text-[var(--accent-gold)] font-medium uppercase">
                 ABOUT ARCHINET
               </span>
             </div>
-          </RevealItem>
+          </RevealTitle>
 
-          <RevealItem variants={fadeRight}>
+          <RevealRight delay={0.1}>
             <h2 className="font-serif text-4xl sm:text-6xl text-white font-light leading-tight tracking-tight">
               A bridge between <br />
               <span className="editorial-italic">brands & visionaries.</span>
             </h2>
-          </RevealItem>
+          </RevealRight>
 
-          <RevealItem variants={fadeRight}>
+          <RevealUp delay={0.2}>
             <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed font-sans">
               We curate premium industry experiences that bring together leading architects, interior designers, developers, and forward-thinking brands. Every Archinet experience is designed to create meaningful conversations, strengthen professional relationships, and open doors to new opportunities.
             </p>
-          </RevealItem>
+          </RevealUp>
 
           {/* Feature Cards Grid (Staggered Cards) */}
-          <RevealGroup staggerChildren={0.12} className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-2">
-            <RevealItem variants={cardReveal} className="p-4 rounded-xl bg-[#0d0d0d] border border-[rgba(255,255,255,0.08)]">
+          <StaggerContainer staggerChildren={0.15} delayChildren={0.3} className="grid grid-cols-1 sm:grid-cols-2 gap-4 py-2">
+            <StaggerItem direction="left" className="p-4 rounded-xl bg-[#0d0d0d] border border-[rgba(255,255,255,0.08)]">
               <Sparkles className="w-5 h-5 text-[var(--accent-gold)] mb-2" />
               <h3 className="font-serif text-lg text-white font-medium mb-1">CURATED NETWORK</h3>
-              <p className="text-xs font-mono text-[var(--text-muted)]">We create an environment where the industry’s most relevant people.</p>
-            </RevealItem>
+              <p className="text-xs font-mono text-[var(--text-muted)]">We create an environment where the industry’s most relevant people meet.</p>
+            </StaggerItem>
 
-            <RevealItem variants={cardReveal} className="p-4 rounded-xl bg-[#0d0d0d] border border-[rgba(255,255,255,0.08)]">
+            <StaggerItem direction="right" className="p-4 rounded-xl bg-[#0d0d0d] border border-[rgba(255,255,255,0.08)]">
               <ShieldCheck className="w-5 h-5 text-[var(--accent-gold)] mb-2" />
               <h3 className="font-serif text-lg text-white font-medium mb-1">EXCLUSIVE FORMATS</h3>
               <p className="text-xs font-mono text-[var(--text-muted)]">Archinet is where architecture, design, and business connect.</p>
-            </RevealItem>
-          </RevealGroup>
+            </StaggerItem>
+          </StaggerContainer>
 
           {/* Bullet List */}
-          <RevealItem variants={fadeRight}>
+          <RevealUp delay={0.4}>
             <div className="flex flex-col gap-2 pt-2">
               <div className="flex items-center gap-3 text-xs font-mono text-[var(--text-ivory)]">
                 <CheckCircle2 className="w-4 h-4 text-[var(--accent-gold)] shrink-0" />
@@ -101,13 +101,11 @@ export default function AboutSection() {
                 <span>Bespoke design dialogue and structural interactions</span>
               </div>
             </div>
-          </RevealItem>
+          </RevealUp>
 
-        </ScrollReveal>
+        </div>
 
       </div>
-
     </section>
   );
 }
-

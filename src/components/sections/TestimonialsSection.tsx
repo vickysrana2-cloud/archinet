@@ -2,9 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { TESTIMONIALS_DATA } from '../../data';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ScrollReveal, RevealItem } from '../animations/ScrollReveal';
-import { fadeRight, imageReveal } from '../animations/motionVariants';
+import { motion } from 'framer-motion';
+import { RevealTitle, RevealLeft, RevealRight, RevealZoom } from '../animations/ScrollReveal';
 
 const TESTIMONIAL_VIDEOS = [
   {
@@ -102,10 +101,9 @@ export default function TestimonialsSection() {
       <div className="grid min-h-[720px] w-full grid-cols-1 lg:grid-cols-2">
 
         {/* =========================================================
-            LEFT — 50% INSTAGRAM REELS EMBED PLAYER
+            LEFT — 50% INSTAGRAM REELS EMBED PLAYER (Enters from Left)
         ========================================================= */}
-        <ScrollReveal
-          variants={imageReveal}
+        <RevealLeft
           className="
             relative
             min-h-[500px]
@@ -150,13 +148,12 @@ export default function TestimonialsSection() {
               </button>
             ))}
           </div>
-        </ScrollReveal>
+        </RevealLeft>
 
         {/* =========================================================
-            RIGHT — 50% EDITORIAL CONTENT AREA
+            RIGHT — 50% EDITORIAL CONTENT AREA (Enters from Right)
         ========================================================= */}
-        <ScrollReveal
-          staggerChildren={0.1}
+        <div
           className="
             relative
             flex
@@ -174,38 +171,35 @@ export default function TestimonialsSection() {
           "
         >
 
-          {/* =====================================================
-              HEADING — EXACTLY 2 LINES MATCHING SCREENSHOT
-          ===================================================== */}
-          <RevealItem
-            variants={fadeRight}
-            className="
-              relative
-              z-30
-              mb-8
-              font-serif
-              text-[36px]
-              sm:text-[46px]
-              lg:text-[52px]
-              xl:text-[60px]
-              font-normal
-              uppercase
-              leading-[0.96]
-              tracking-tight
-              text-white
-              text-left
-              max-w-[720px]
-            "
-          >
-            WHAT OUR ATTENDEES
-            <br />
-            SAY
-          </RevealItem>
+          {/* HEADING — Fade & Slide DOWN */}
+          <RevealTitle>
+            <h2
+              className="
+                relative
+                z-30
+                mb-8
+                font-serif
+                text-[36px]
+                sm:text-[46px]
+                lg:text-[52px]
+                xl:text-[60px]
+                font-normal
+                uppercase
+                leading-[0.96]
+                tracking-tight
+                text-white
+                text-left
+                max-w-[720px]
+              "
+            >
+              WHAT OUR ATTENDEES
+              <br />
+              SAY
+            </h2>
+          </RevealTitle>
 
-          {/* =====================================================
-              DESKTOP VIEW (≥ 1024px): 1 ACTIVE CARD + 1 HALF VISIBLE CUT-OFF CARD
-          ===================================================== */}
-          <div className="hidden lg:block w-full overflow-hidden">
+          {/* DESKTOP VIEW */}
+          <RevealRight delay={0.2} className="hidden lg:block w-full overflow-hidden">
             <div className="relative w-full">
               <motion.div
                 className="flex gap-6 w-max"
@@ -215,7 +209,6 @@ export default function TestimonialsSection() {
                 {extendedDesktopData.map((item, index) => {
                   const isRealIndex = index % total;
                   const isActive = activeIndex === isRealIndex && index === activeIndex;
-                  const isNext = index === activeIndex + 1;
 
                   return (
                     <div
@@ -246,23 +239,17 @@ export default function TestimonialsSection() {
                         }
                       `}
                     >
-                      {/* Gold Corner Accent (Attached Top-Left) */}
+                      {/* Gold Corner Accent */}
                       <div className="absolute top-0 left-0 w-8 h-8 bg-[#dcb45e] flex items-center justify-center font-serif text-lg font-bold text-[#050505]">
                         “
                       </div>
 
                       {/* Card Body */}
                       <div className="flex flex-1 flex-col pt-3">
-                        {/* Centered Stars */}
                         <div className="mb-4 flex items-center justify-center gap-1.5 text-xl xl:text-2xl text-[#dcb45e]">
-                          <span>★</span>
-                          <span>★</span>
-                          <span>★</span>
-                          <span>★</span>
-                          <span>★</span>
+                          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
                         </div>
 
-                        {/* Centered Quote */}
                         <div className="flex flex-1 items-center justify-center px-1">
                           <p className="text-center font-sans text-xs sm:text-[13px] xl:text-[14px] font-normal leading-[1.65] text-[#e5e2db] max-w-[280px] xl:max-w-[310px]">
                             &ldquo;{item.quote}&rdquo;
@@ -311,12 +298,10 @@ export default function TestimonialsSection() {
                 />
               ))}
             </div>
-          </div>
+          </RevealRight>
 
-          {/* =====================================================
-              MOBILE / TABLET VIEW (< 1024px): DEDICATED CAROUSEL
-          ===================================================== */}
-          <div className="block lg:hidden w-full relative">
+          {/* MOBILE / TABLET VIEW */}
+          <RevealZoom delay={0.2} className="block lg:hidden w-full relative">
             <div className="relative h-[380px] w-full overflow-hidden">
               {TESTIMONIALS_DATA.map((item, index) => {
                 const offset = getOffset(index);
@@ -387,7 +372,7 @@ export default function TestimonialsSection() {
                           className="h-12 w-12 shrink-0 rounded-full border border-[#dcb45e]/40 object-cover"
                         />
                         <div className="min-w-0">
-                          <h4 className="truncate font-serif text-xs font-bold uppercase tracking-wide text-white">
+                          <h4 className="truncate font-serif text-xs font-bold uppercase tracking-wide text-[#ffffff]">
                             {item.author}
                           </h4>
                           <p className="mt-0.5 truncate font-mono text-[9px] uppercase tracking-[0.14em] text-[#dcb45e]">
@@ -415,9 +400,9 @@ export default function TestimonialsSection() {
                 />
               ))}
             </div>
-          </div>
+          </RevealZoom>
 
-        </ScrollReveal>
+        </div>
       </div>
     </section>
   );

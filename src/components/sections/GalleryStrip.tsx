@@ -2,13 +2,12 @@
 
 import React from 'react';
 import { GALLERY_IMAGES } from '../../data';
-import { ScrollReveal } from '../animations/ScrollReveal';
-import { fadeUp } from '../animations/motionVariants';
+import { RevealZoom } from '../animations/ScrollReveal';
 
 export default function GalleryStrip() {
   return (
     <section className="w-full py-12 bg-[#050505] overflow-hidden border-b border-[rgba(255,255,255,0.06)]">
-      <ScrollReveal variants={fadeUp} className="w-full">
+      <RevealZoom className="w-full">
         <div className="flex gap-4 animate-marquee whitespace-nowrap">
           {GALLERY_IMAGES.map((imgUrl, idx) => (
             <div
@@ -37,8 +36,7 @@ export default function GalleryStrip() {
             </div>
           ))}
         </div>
-      </ScrollReveal>
+      </RevealZoom>
     </section>
   );
 }
-

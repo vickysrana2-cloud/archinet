@@ -3,9 +3,14 @@
 import React, { useState, useEffect } from 'react';
 import { LEADERS_DATA } from '../../data';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { ScrollReveal, RevealItem, RevealGroup } from '../animations/ScrollReveal';
-import { fadeLeft, fadeRight, cardReveal } from '../animations/motionVariants';
-import { motion, AnimatePresence } from 'framer-motion';
+import {
+  RevealTitle,
+  RevealLeft,
+  RevealRight,
+  StaggerContainer,
+  StaggerItem,
+} from '../animations/ScrollReveal';
+import { motion } from 'framer-motion';
 
 export default function LeadersSection() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -26,41 +31,34 @@ export default function LeadersSection() {
     setActiveIndex((prev) => (prev === LEADERS_DATA.length - 1 ? 0 : prev + 1));
   };
 
-  const getIndices = () => {
-    const len = LEADERS_DATA.length;
-    const prev = (activeIndex - 1 + len) % len;
-    const next = (activeIndex + 1) % len;
-    return { prev, active: activeIndex, next };
-  };
-
-  const { prev, active, next } = getIndices();
-
   return (
     <section id="leaders" className="w-full py-24 lg:py-36 px-6 lg:px-12 bg-[#050505] border-b border-[rgba(255,255,255,0.06)] overflow-hidden">
       
       <div className="max-w-7xl mx-auto">
         
         {/* Section Header */}
-        <ScrollReveal staggerChildren={0.1} className="flex flex-col md:flex-row md:items-end justify-between mb-12 lg:mb-16 gap-6 text-center lg:text-left">
-          <RevealItem variants={fadeLeft}>
-            <div>
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 lg:mb-16 gap-6 text-center lg:text-left">
+          <div>
+            <RevealTitle>
               <span className="text-xs font-mono tracking-[0.25em] text-[var(--accent-gold)] uppercase block mb-3">
                 KEYNOTE VISIONARIES
               </span>
+            </RevealTitle>
+            <RevealLeft delay={0.1}>
               <h2 className="font-serif text-4xl sm:text-6xl text-white font-light tracking-tight">
                 Our Industry <span className="editorial-italic">Leaders.</span>
               </h2>
-            </div>
-          </RevealItem>
+            </RevealLeft>
+          </div>
 
-          <RevealItem variants={fadeRight}>
+          <RevealRight delay={0.15}>
             <p className="text-xs font-mono text-[var(--text-muted)] tracking-wider max-w-xs uppercase mx-auto lg:mx-0">
               DISTINGUISHED PRINCIPALS & CREATIVE DIRECTORS SHAPING GLOBAL SKYLINE DESIGN
             </p>
-          </RevealItem>
-        </ScrollReveal>
+          </RevealRight>
+        </div>
 
-        {/* Mobile View: Smooth Coverflow Carousel with Left & Right Side Cards Peek & Arrows */}
+        {/* Mobile View: Smooth Coverflow Carousel */}
         <div className="block lg:hidden w-full overflow-hidden relative">
           <div className="relative w-full flex items-center justify-center h-[460px] py-2">
             
@@ -168,14 +166,14 @@ export default function LeadersSection() {
         </div>
 
         {/* Desktop View: Full 5-Column Grid */}
-        <RevealGroup 
-          staggerChildren={0.08} 
+        <StaggerContainer 
+          staggerChildren={0.15} 
           className="hidden lg:grid lg:grid-cols-5 gap-6"
         >
           {LEADERS_DATA.map((leader) => (
-            <RevealItem
+            <StaggerItem
               key={leader.id}
-              variants={cardReveal}
+              direction="up"
               className="group flex flex-col"
             >
               <div className="relative aspect-[3/4] rounded-xl overflow-hidden mb-4 border border-[rgba(255,255,255,0.1)] group-hover:border-[var(--accent-gold)] transition-colors duration-500 shadow-lg">
@@ -193,16 +191,12 @@ export default function LeadersSection() {
               </h3>
               <p className="text-xs font-mono text-[var(--accent-gold)] font-medium mt-0.5">{leader.role}</p>
               <p className="text-xs font-mono text-[var(--text-muted)]">{leader.company}</p>
-            </RevealItem>
+            </StaggerItem>
           ))}
-        </RevealGroup>
+        </StaggerContainer>
 
       </div>
 
     </section>
   );
 }
-
-
-
-

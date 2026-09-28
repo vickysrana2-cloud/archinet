@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { ArrowDown } from "lucide-react";
 import { motion } from "framer-motion";
+import { CUBIC_EASE } from "../animations/motionVariants";
 
 export default function HeroSectionVideo() {
   const scrollToNext = () => {
@@ -40,19 +41,16 @@ export default function HeroSectionVideo() {
       {/* =========================================================
           LIGHT CINEMATIC OVERLAYS & VIGNETTE
       ========================================================== */}
-      {/* Light subtle tint overlay for text legibility */}
       <div className="absolute inset-0 bg-black/20 pointer-events-none" />
-
-      {/* Soft vertical gradient overlay for header & footer blending */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-[#050505] pointer-events-none" />
 
       {/* =========================================================
-          LEFT FEATURED INDICATOR (EDITORIAL SIDEBAR)
+          LEFT FEATURED INDICATOR (EDITORIAL SIDEBAR - Slide Left)
       ========================================================== */}
       <motion.div
-        initial={{ opacity: 0, x: -20 }}
+        initial={{ opacity: 0, x: -60 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.9, delay: 0.4 }}
+        transition={{ duration: 0.8, delay: 0.4, ease: CUBIC_EASE }}
         className="absolute left-[4.5vw] top-1/2 z-20 hidden -translate-y-1/2 md:block pointer-events-none"
       >
         <div className="flex flex-col items-center gap-7">
@@ -84,11 +82,11 @@ export default function HeroSectionVideo() {
       ========================================================== */}
       <div className="relative z-20 flex min-h-[100svh] w-full max-w-[1280px] items-center justify-center px-6 pb-24 pt-24 text-center">
         <div className="mx-auto flex max-w-[1100px] flex-col items-center">
-          {/* Eyebrow / Tagline for Mobile & Tablet */}
+          {/* Eyebrow / Tagline for Mobile & Tablet: Slide DOWN from top */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: -40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: CUBIC_EASE }}
             className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#dcb45e]/30 bg-black/40 px-4 py-1.5 backdrop-blur-sm md:hidden"
           >
             <span className="h-1.5 w-1.5 rounded-full bg-[#dcb45e] animate-pulse" />
@@ -97,11 +95,11 @@ export default function HeroSectionVideo() {
             </span>
           </motion.div>
 
-          {/* Main Editorial Headline */}
+          {/* Main Editorial Headline: Slide IN from Left */}
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.3 }}
+            initial={{ opacity: 0, x: -60 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: CUBIC_EASE }}
             className="
               max-w-[1100px]
               font-serif
@@ -116,11 +114,11 @@ export default function HeroSectionVideo() {
             Where Visionaries Meet
           </motion.h1>
 
-          {/* Supporting Text */}
+          {/* Supporting Text: Slide UP from bottom */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
+            transition={{ duration: 0.8, delay: 0.45, ease: CUBIC_EASE }}
             className="
               mt-7
               max-w-[800px]
@@ -135,11 +133,11 @@ export default function HeroSectionVideo() {
             A CURATED PLATFORM FOR DESIGN &amp; ARCHITECTURE
           </motion.p>
 
-          {/* Primary Call to Action Button */}
+          {/* Primary Call to Action Button: Slide IN from Right */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
+            initial={{ opacity: 0, x: 60 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.6, ease: CUBIC_EASE }}
             className="mt-12"
           >
             <Link
@@ -182,14 +180,14 @@ export default function HeroSectionVideo() {
       </div>
 
       {/* =========================================================
-          SCROLL DOWN INDICATOR
+          SCROLL DOWN INDICATOR — Scale & Zoom UP
       ========================================================== */}
       <motion.button
         type="button"
         onClick={scrollToNext}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 1 }}
+        initial={{ opacity: 0, scale: 0.85 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, delay: 0.8, ease: CUBIC_EASE }}
         className="
           absolute
           bottom-8

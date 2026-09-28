@@ -2,8 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ScrollReveal, RevealItem } from '../animations/ScrollReveal';
-import { fadeUp, scaleIn } from '../animations/motionVariants';
+import { RevealTitle, RevealUp, RevealZoom } from '../animations/ScrollReveal';
 
 const ROW_1_BRANDS = [
   'GREATWHITE',
@@ -42,38 +41,36 @@ export default function BrandsSection() {
       <div className="max-w-7xl mx-auto px-6 flex flex-col items-center">
         
         {/* Main Section Header */}
-        <ScrollReveal staggerChildren={0.08} className="text-center max-w-3xl mb-14 sm:mb-16">
-          
-          <RevealItem variants={fadeUp}>
+        <div className="text-center max-w-3xl mb-14 sm:mb-16">
+          <RevealTitle>
             <h2 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-normal text-[#dcb45e] tracking-tight leading-[1.06] uppercase">
               THE COMPANY<br />WE KEEP.
             </h2>
-          </RevealItem>
+          </RevealTitle>
 
           {/* Golden Line Divider with Star Icon */}
-          <RevealItem variants={scaleIn}>
+          <RevealZoom delay={0.1}>
             <div className="flex items-center justify-center gap-4 my-6">
               <div className="w-16 sm:w-24 h-px bg-[#dcb45e]/30" />
               <span className="text-xs text-[#dcb45e] select-none">★</span>
               <div className="w-16 sm:w-24 h-px bg-[#dcb45e]/30" />
             </div>
-          </RevealItem>
+          </RevealZoom>
 
           {/* Gold Italic Subtitle 1 */}
-          <RevealItem variants={fadeUp}>
+          <RevealUp delay={0.15}>
             <p className="font-serif editorial-italic text-lg sm:text-2xl text-[#dcb45e] font-normal tracking-wide leading-relaxed">
               A legacy built with brands that shape the spaces we live in.
             </p>
-          </RevealItem>
+          </RevealUp>
 
           {/* Small Subtitle 2 */}
-          <RevealItem variants={fadeUp}>
+          <RevealUp delay={0.2}>
             <p className="text-[11px] sm:text-xs font-mono text-[#a09e97] tracking-wider mt-3">
               A selection of brands that have partnered with Archinet™ across thirteen editions.
             </p>
-          </RevealItem>
-
-        </ScrollReveal>
+          </RevealUp>
+        </div>
 
       </div>
 

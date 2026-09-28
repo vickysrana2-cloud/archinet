@@ -2,8 +2,13 @@
 
 import React, { useState } from 'react';
 import { Send, CheckCircle2, Mail, Phone, MapPin } from 'lucide-react';
-import { ScrollReveal, RevealItem } from '../animations/ScrollReveal';
-import { fadeLeft, fadeRight, fadeUp, cardReveal } from '../animations/motionVariants';
+import {
+  RevealTitle,
+  RevealLeft,
+  RevealRight,
+  RevealUp,
+  RevealZoom,
+} from '../animations/ScrollReveal';
 
 export default function ContactSection() {
   const [formState, setFormState] = useState({
@@ -42,29 +47,26 @@ export default function ContactSection() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
         
         {/* Left Info Column (Enters from Left) */}
-        <ScrollReveal
-          staggerChildren={0.08}
-          className="lg:col-span-5 flex flex-col gap-6"
-        >
-          <RevealItem variants={fadeLeft}>
+        <div className="lg:col-span-5 flex flex-col gap-6">
+          <RevealTitle>
             <span className="text-xs font-mono tracking-[0.25em] text-[var(--accent-gold)] uppercase font-semibold">
               GET IN TOUCH
             </span>
-          </RevealItem>
+          </RevealTitle>
 
-          <RevealItem variants={fadeLeft}>
+          <RevealLeft delay={0.1}>
             <h2 className="font-serif text-4xl sm:text-6xl text-white font-light tracking-tight leading-tight">
               The <span className="editorial-italic">Conversation</span> Continues.
             </h2>
-          </RevealItem>
+          </RevealLeft>
 
-          <RevealItem variants={fadeLeft}>
+          <RevealLeft delay={0.2}>
             <p className="text-xs font-mono text-[var(--accent-gold)] tracking-widest uppercase">
               THANK YOU FOR BEING PART OF THE ROOM.
             </p>
-          </RevealItem>
+          </RevealLeft>
 
-          <RevealItem variants={cardReveal}>
+          <RevealZoom delay={0.25}>
             <div className="p-6 rounded-2xl bg-[#0d0d0d] border border-[rgba(197,168,128,0.2)] flex flex-col gap-4 my-2">
               <span className="text-xs font-mono text-white font-bold tracking-widest uppercase">
                 ONE CITY. ONE DAY. ONE VISION.
@@ -78,9 +80,9 @@ export default function ContactSection() {
                 <span>20 FEBRUARY · THE ST. REGIS</span>
               </div>
             </div>
-          </RevealItem>
+          </RevealZoom>
 
-          <RevealItem variants={fadeLeft}>
+          <RevealUp delay={0.3}>
             <div className="flex flex-col gap-3 font-mono text-xs text-[var(--text-secondary)] pt-2">
               <div className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-[var(--accent-gold)]" />
@@ -91,14 +93,11 @@ export default function ContactSection() {
                 <span>+91 (022) 4890 1200</span>
               </div>
             </div>
-          </RevealItem>
-        </ScrollReveal>
+          </RevealUp>
+        </div>
 
         {/* Right Form Column (Enters from Right) */}
-        <ScrollReveal
-          variants={fadeRight}
-          className="lg:col-span-7 p-8 sm:p-10 rounded-2xl bg-[#0d0d0d] border border-[rgba(255,255,255,0.08)] shadow-2xl"
-        >
+        <RevealRight className="lg:col-span-7 p-8 sm:p-10 rounded-2xl bg-[#0d0d0d] border border-[rgba(255,255,255,0.08)] shadow-2xl">
           {submitted ? (
             <div className="py-12 flex flex-col items-center text-center gap-4">
               <CheckCircle2 className="w-14 h-14 text-[var(--accent-gold)]" />
@@ -212,7 +211,7 @@ export default function ContactSection() {
 
               <button
                 type="submit"
-                className="w-full py-4 rounded-full bg-[var(--accent-gold)] hover:bg-[var(--accent-gold-light)] text-[#070707] font-mono text-xs font-bold tracking-widest transition-all duration-300 flex items-center justify-center gap-2 shadow-lg"
+                className="w-full py-4 rounded-full bg-[var(--accent-gold)] hover:bg-[var(--accent-gold-light)] text-[#070707] font-mono text-xs font-bold tracking-widest transition-all duration-300 flex items-center justify-center gap-2 shadow-lg cursor-pointer"
               >
                 <span>SUBMIT INVITATION REQUEST</span>
                 <Send className="w-4 h-4" />
@@ -220,11 +219,10 @@ export default function ContactSection() {
 
             </form>
           )}
-        </ScrollReveal>
+        </RevealRight>
 
       </div>
 
     </section>
   );
 }
-
