@@ -1,199 +1,170 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { LEADERS_DATA } from '../../data';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+
 import {
   RevealTitle,
   RevealLeft,
   RevealRight,
-  StaggerContainer,
-  StaggerItem,
 } from '../animations/ScrollReveal';
-import { motion } from 'framer-motion';
 
 export default function LeadersSection() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(true);
 
-  // Auto-slide every 3 seconds in a loop on mobile view
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % LEADERS_DATA.length);
-    }, 3000);
-    return () => clearInterval(timer);
+  const touchStartX = useRef<number | null>(null);
+  const totalOriginal = LEADERS_DATA.length;
+  // Duplicate array for seamless infinite looping
+  const extendedLeaders = [...LEADERS_DATA, ...LEADERS_DATA];
+
+  const nextSlide = useCallback(() => {
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => prev + 1);
   }, []);
 
-  const handlePrev = () => {
-    setActiveIndex((prev) => (prev === 0 ? LEADERS_DATA.length - 1 : prev - 1));
+  const prevSlide = useCallback(() => {
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => {
+      if (prev === 0) {
+        return totalOriginal - 1;
+      }
+      return prev - 1;
+    });
+  }, [totalOriginal]);
+
+  // Seamless loop handler when reaching the cloned set boundary
+  useEffect(() => {
+    if (currentIndex >= totalOriginal) {
+      const timer = setTimeout(() => {
+        setIsTransitioning(false);
+        setCurrentIndex(0);
+      }, 500); // matches 500ms transition duration
+      return () => clearTimeout(timer);
+    }
+  }, [currentIndex, totalOriginal]);
+
+  // Auto-advance slide every 3 seconds unless paused on hover
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [isPaused, nextSlide]);
+
+  // Touch Swipe Handlers for Mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
   };
 
-  const handleNext = () => {
-    setActiveIndex((prev) => (prev === LEADERS_DATA.length - 1 ? 0 : prev + 1));
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX.current - touchEndX;
+
+    if (diff > 40) {
+      nextSlide();
+    } else if (diff < -40) {
+      prevSlide();
+    }
+    touchStartX.current = null;
   };
 
   return (
-    <section id="leaders" className="w-full py-24 lg:py-36 px-6 lg:px-12 bg-[#050505] border-b border-[rgba(255,255,255,0.06)] overflow-hidden">
+    <section id="leaders" className="w-full py-20 lg:py-32 bg-[#050505] overflow-hidden">
       
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 lg:mb-16 gap-6 text-center lg:text-left">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 lg:mb-14 gap-6 text-center lg:text-left">
           <div>
             <RevealTitle>
-              <span className="text-xs font-mono tracking-[0.25em] text-[var(--accent-gold)] uppercase block mb-3">
+              <span className="text-xs font-mono tracking-[0.25em] text-[var(--accent-gold)] uppercase block mb-3 font-medium">
                 KEYNOTE VISIONARIES
               </span>
             </RevealTitle>
             <RevealLeft delay={0.1}>
-              <h2 className="font-serif text-4xl sm:text-6xl text-white font-light tracking-tight">
+              <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl text-white font-light tracking-tight">
                 Our Industry <span className="editorial-italic">Leaders.</span>
               </h2>
             </RevealLeft>
           </div>
 
           <RevealRight delay={0.15}>
-            <p className="text-xs font-mono text-[var(--text-muted)] tracking-wider max-w-xs uppercase mx-auto lg:mx-0">
+            <p className="text-xs font-mono text-[var(--text-muted)] tracking-wider max-w-xs uppercase text-center md:text-right">
               DISTINGUISHED PRINCIPALS & CREATIVE DIRECTORS SHAPING GLOBAL SKYLINE DESIGN
             </p>
           </RevealRight>
         </div>
 
-        {/* Mobile View: Smooth Coverflow Carousel */}
-        <div className="block lg:hidden w-full overflow-hidden relative">
-          <div className="relative w-full flex items-center justify-center h-[460px] py-2">
-            
-            {/* Left Floating Arrow Button */}
-            <button
-              type="button"
-              onClick={handlePrev}
-              className="absolute left-1.5 top-[43%] -translate-y-1/2 z-30 w-9 h-9 rounded-full border border-[#dcb45e]/50 hover:border-[#dcb45e] bg-black/80 backdrop-blur-md text-[#dcb45e] flex items-center justify-center transition-all duration-300 active:scale-95 shadow-xl"
-              aria-label="Previous leader"
-            >
-              <ChevronLeft className="w-5 h-5 stroke-[1.5]" />
-            </button>
+        {/* Carousel Container Viewport */}
+        <div 
+          className="relative w-full overflow-hidden select-none group py-4 [--card-step:calc(100%+1.25rem)] sm:[--card-step:calc(50%+0.625rem)] md:[--card-step:calc(33.3333%+0.4166rem)] lg:[--card-step:calc(20%+0.25rem)]"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
 
-            {/* Right Floating Arrow Button */}
-            <button
-              type="button"
-              onClick={handleNext}
-              className="absolute right-1.5 top-[43%] -translate-y-1/2 z-30 w-9 h-9 rounded-full border border-[#dcb45e]/50 hover:border-[#dcb45e] bg-black/80 backdrop-blur-md text-[#dcb45e] flex items-center justify-center transition-all duration-300 active:scale-95 shadow-xl"
-              aria-label="Next leader"
-            >
-              <ChevronRight className="w-5 h-5 stroke-[1.5]" />
-            </button>
-
-            {/* Perfect Dead-Centered Cards Container */}
-            <div className="relative w-full h-full overflow-hidden">
-              {LEADERS_DATA.map((leader, idx) => {
-                let offset = idx - activeIndex;
-                if (offset > LEADERS_DATA.length / 2) offset -= LEADERS_DATA.length;
-                if (offset < -LEADERS_DATA.length / 2) offset += LEADERS_DATA.length;
-
-                const isActive = offset === 0;
-
-                return (
-                  <motion.div
-                    key={leader.id}
-                    initial={false}
-                    animate={{
-                      x: `calc(-50% + ${offset * 270}px)`,
-                      scale: isActive ? 1 : 0.84,
-                      opacity: isActive ? 1 : 0.35,
+          {/* Track moving strictly in 1 single horizontal row */}
+          <div
+            className="flex flex-nowrap gap-5 transition-transform ease-[cubic-bezier(0.25,1,0.35,1)]"
+            style={{
+              transform: `translateX(calc(-1 * ${currentIndex} * var(--card-step)))`,
+              transitionDuration: isTransitioning ? '500ms' : '0ms',
+            }}
+          >
+            {extendedLeaders.map((leader, idx) => (
+              <div
+                key={`${leader.id}-${idx}`}
+                className="flex-none w-full sm:w-[calc((100%-1.25rem)/2)] md:w-[calc((100%-2*1.25rem)/3)] lg:w-[calc((100%-4*1.25rem)/5)] group/card flex flex-col cursor-pointer"
+              >
+                <div className="relative aspect-[3/4] rounded-xl overflow-hidden mb-3.5 border border-white/10 group-hover/card:border-[var(--accent-gold)] transition-colors duration-500 shadow-lg bg-black/40">
+                  <div
+                    className="absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover/card:scale-105 grayscale group-hover/card:grayscale-0 contrast-110 group-hover/card:contrast-100 brightness-90 group-hover/card:brightness-100"
+                    style={{
+                      backgroundImage: `url('${leader.image}')`
                     }}
-                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    onClick={() => setActiveIndex(idx)}
-                    className={`
-                      absolute
-                      top-1
-                      left-1/2
-                      w-[250px]
-                      sm:w-[270px]
-                      rounded-2xl
-                      bg-[#0a0a0a]
-                      p-3.5
-                      cursor-pointer
-                      select-none
-                      overflow-hidden
-                      ${
-                        isActive
-                          ? 'border-2 border-[#dcb45e] shadow-[0_0_35px_rgba(220,180,94,0.18)] z-20'
-                          : 'border border-white/10 z-10'
-                      }
-                    `}
-                  >
-                    {/* Card Image */}
-                    <div className="relative aspect-[3/4] rounded-xl overflow-hidden bg-black/60 mb-3.5">
-                      <div
-                        className="w-full h-full bg-cover bg-center grayscale contrast-110 brightness-95"
-                        style={{ backgroundImage: `url('${leader.image}')` }}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
-                    </div>
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-75 group-hover/card:opacity-30 transition-opacity duration-500" />
+                </div>
 
-                    {/* Leader Information */}
-                    <div className="px-1 pb-1 text-left">
-                      <h3 className="font-serif text-lg text-white font-medium truncate">
-                        {leader.name}
-                      </h3>
-                      <p className="text-[11px] font-mono text-[var(--accent-gold)] font-medium mt-0.5 uppercase tracking-wider truncate">
-                        {leader.role}
-                      </p>
-                      <p className="text-[10px] font-mono text-[var(--text-muted)] truncate">
-                        {leader.company}
-                      </p>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-
-          </div>
-
-          {/* Indicator Pagination Capsular Dots */}
-          <div className="flex items-center justify-center gap-2 mt-2">
-            {LEADERS_DATA.map((leader, idx) => (
-              <button
-                key={leader.id}
-                type="button"
-                onClick={() => setActiveIndex(idx)}
-                className={`h-1.5 rounded-full transition-all duration-500 ${
-                  activeIndex === idx ? 'w-6 bg-[#dcb45e]' : 'w-1.5 bg-white/20'
-                }`}
-                aria-label={`Go to ${leader.name}`}
-              />
+                <h3 className="font-serif text-lg text-white font-medium group-hover/card:text-[var(--accent-gold)] transition-colors truncate">
+                  {leader.name}
+                </h3>
+                <p className="text-xs font-mono text-[var(--accent-gold)] font-medium mt-0.5 truncate uppercase tracking-wider">
+                  {leader.role}
+                </p>
+                <p className="text-xs font-mono text-[var(--text-muted)] truncate">
+                  {leader.company}
+                </p>
+              </div>
             ))}
           </div>
         </div>
 
-        {/* Desktop View: Full 5-Column Grid */}
-        <StaggerContainer 
-          staggerChildren={0.15} 
-          className="hidden lg:grid lg:grid-cols-5 gap-6"
-        >
-          {LEADERS_DATA.map((leader) => (
-            <StaggerItem
-              key={leader.id}
-              direction="up"
-              className="group flex flex-col"
-            >
-              <div className="relative aspect-[3/4] rounded-xl overflow-hidden mb-4 border border-[rgba(255,255,255,0.1)] group-hover:border-[var(--accent-gold)] transition-colors duration-500 shadow-lg">
-                <div
-                  className="absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0 contrast-110 group-hover:contrast-100 brightness-85 group-hover:brightness-100"
-                  style={{
-                    backgroundImage: `url('${leader.image}')`
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#070707] via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity duration-500" />
-              </div>
-
-              <h3 className="font-serif text-xl text-white font-medium group-hover:text-[var(--accent-gold)] transition-colors">
-                {leader.name}
-              </h3>
-              <p className="text-xs font-mono text-[var(--accent-gold)] font-medium mt-0.5">{leader.role}</p>
-              <p className="text-xs font-mono text-[var(--text-muted)]">{leader.company}</p>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
+        {/* Carousel Progress Indicator Dots */}
+        <div className="flex flex-wrap items-center justify-center gap-1.5 mt-6 max-w-sm mx-auto">
+          {LEADERS_DATA.map((leader, idx) => {
+            const activeDot = (currentIndex % totalOriginal) === idx;
+            return (
+              <button
+                key={`dot-${leader.id}`}
+                type="button"
+                onClick={() => {
+                  setIsTransitioning(true);
+                  setCurrentIndex(idx);
+                }}
+                className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
+                  activeDot ? 'w-7 bg-[var(--accent-gold)]' : 'w-1.5 bg-white/20 hover:bg-white/40'
+                }`}
+                aria-label={`Go to ${leader.name}`}
+              />
+            );
+          })}
+        </div>
 
       </div>
 

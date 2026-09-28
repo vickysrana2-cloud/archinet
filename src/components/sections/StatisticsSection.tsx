@@ -56,18 +56,18 @@ function CountNumber({ value }: { value: string }) {
 
 export default function StatisticsSection() {
   return (
-    <section className="w-full py-24 bg-[#070707] border-y border-white/10 overflow-hidden">
+    <section className="w-full py-24 bg-[#070707] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <StaggerContainer
           staggerChildren={0.2}
           once={false}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 divide-y lg:divide-y-0 lg:divide-x divide-[rgba(197,168,128,0.2)]"
+          className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12"
         >
-          {STATISTICS_DATA.map((stat, idx) => (
+          {STATISTICS_DATA.map((stat) => (
             <StaggerItem
               key={stat.label}
               direction="up"
-              className={`flex flex-col items-center text-center ${idx > 0 ? 'pt-6 lg:pt-0' : ''}`}
+              className="flex flex-col items-center text-center"
             >
               <CountNumber value={stat.value} />
               <span className="text-[11px] font-mono text-[var(--text-secondary)] tracking-[0.2em] uppercase max-w-[180px] mt-2 font-medium">

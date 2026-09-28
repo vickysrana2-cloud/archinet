@@ -18,60 +18,61 @@ export interface Edition {
   venue: string;
   date: string;
   year: string;
-  image: string;
+  image?: string;
+  video: string;
   highlights: string;
 }
 
 export const EDITIONS_DATA: Edition[] = [
   {
-    id: "edition-ritz",
-    number: "11TH EDITION",
-    city: "BANGALORE",
-    venue: "The Ritz-Carlton",
-    date: "22 Jul 2025",
-    year: "2025",
-    image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=1200&auto=format&fit=crop",
-    highlights: "Luxury Resort Architecture & Vernacular Design Innovations"
-  },
-  {
-    id: "edition-kohinoor",
-    number: "12TH EDITION",
-    city: "HYDERABAD",
-    venue: "ITC Kohinoor",
-    date: "14 Nov 2025",
-    year: "2025",
-    image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop",
-    highlights: "Biophilic Hospitality Interiors & Modern Structural Glass"
-  },
-  {
-    id: "edition-westin",
-    number: "13TH EDITION",
-    city: "GOA",
-    venue: "The Westin",
-    date: "15 Mar 2026",
-    year: "2026",
-    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop",
-    highlights: "Coastal Modernism & Sustainable Luxury Planning"
-  },
-  {
-    id: "edition-14",
-    number: "14TH EDITION",
+    id: "edition-9",
+    number: "9TH EDITION",
     city: "MUMBAI",
     venue: "The St. Regis",
-    date: "20 Feb 2027",
-    year: "2027",
-    image: "https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?q=80&w=1200&auto=format&fit=crop",
-    highlights: "Future of Parametric High-Rise & Ultra-Luxury Hospitality"
+    date: "12 Oct 2024",
+    year: "2024",
+    video: "/assets/event%20videos/9th%20Edition%20Mumbai.mp4",
+    highlights: "High-Density Urban Living & Structural Innovation"
   },
   {
-    id: "edition-leela",
+    id: "edition-10",
     number: "10TH EDITION",
     city: "BENGALURU",
     venue: "The Leela Palace",
     date: "18 Apr 2025",
     year: "2025",
-    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop",
+    video: "/assets/event%20videos/10th%20Edition%20Bengaluru.mp4",
     highlights: "Tech-Infused Workspaces & Next-Gen Spatial Systems"
+  },
+  {
+    id: "edition-11",
+    number: "11TH EDITION",
+    city: "HYDERABAD",
+    venue: "ITC Kohinoor",
+    date: "22 Jul 2025",
+    year: "2025",
+    video: "/assets/event%20videos/11th%20Edition%20Hyderabad.mp4",
+    highlights: "Biophilic Hospitality Interiors & Modern Structural Glass"
+  },
+  {
+    id: "edition-12",
+    number: "12TH EDITION",
+    city: "PUNE",
+    venue: "JW Marriott",
+    date: "14 Nov 2025",
+    year: "2025",
+    video: "/assets/event%20videos/12th%20Edition%20Pune.mp4",
+    highlights: "Sustainable Masterplanning & Contemporary Facades"
+  },
+  {
+    id: "edition-13",
+    number: "13TH EDITION",
+    city: "MUMBAI",
+    venue: "Jio World Centre",
+    date: "15 Mar 2026",
+    year: "2026",
+    video: "/assets/event%20videos/13th%20Edition%20Mumbai.mp4",
+    highlights: "Coastal Modernism & Sustainable Luxury Planning"
   }
 ];
 
@@ -86,38 +87,143 @@ export interface Leader {
 export const LEADERS_DATA: Leader[] = [
   {
     id: "leader-1",
-    name: "Sanjay Puri",
+    name: "Ar. Ahmed Shaikh",
     role: "Principal Architect",
-    company: "Sanjay Puri Architects",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop"
+    company: "Ahmed & Associates",
+    image: "/assets/architects/Ar.%20Ahmed%20Shaikh.jpg"
   },
   {
     id: "leader-2",
-    name: "Sonali Rastogi",
-    role: "Co-Founder & Director",
-    company: "Morphogenesis",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=crop"
+    name: "Ar. Annkur Khosla",
+    role: "Principal Architect",
+    company: "Annkur Khosla Design Studio",
+    image: "/assets/architects/Ar.%20Annkur%20Khosla.jpg"
   },
   {
     id: "leader-3",
-    name: "Ambrish Arora",
-    role: "Design Principal",
-    company: "Studio Lotus",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600&auto=format&fit=crop"
+    name: "Ar. Behzad Kharas",
+    role: "Chairman & Managing Director",
+    company: "BNK Group",
+    image: "/assets/architects/Ar.%20Behzad%20Kharas.jpg"
   },
   {
     id: "leader-4",
-    name: "Patricia Urquiola",
-    role: "Creative Director",
-    company: "Studio Urquiola Milan",
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=600&auto=format&fit=crop"
+    name: "Ar. Canna Patel",
+    role: "Principal Architect",
+    company: "HCP Interior Design",
+    image: "/assets/architects/Ar.%20Canna%20Patel.jpg"
   },
   {
     id: "leader-5",
-    name: "Manit Rastogi",
-    role: "Founder Principal",
-    company: "Morphogenesis",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=600&auto=format&fit=crop"
+    name: "Ar. Hiren Patel",
+    role: "Principal Architect",
+    company: "Hiren Patel Architects",
+    image: "/assets/architects/Ar.%20Hiren%20Patel.jpg"
+  },
+  {
+    id: "leader-6",
+    name: "Ar. Kavita Talib",
+    role: "Principal Architect",
+    company: "Kavita Talib Architecture",
+    image: "/assets/architects/Ar.%20Kavita%20Talib.jpg"
+  },
+  {
+    id: "leader-7",
+    name: "Ar. Khozema Chitalwala",
+    role: "Principal Architect",
+    company: "Design Matrix",
+    image: "/assets/architects/Ar.%20Khozema%20Chitalwala.jpg"
+  },
+  {
+    id: "leader-8",
+    name: "Ar. Lakshmi Govekar",
+    role: "Principal Architect",
+    company: "Zuari Design Studio",
+    image: "/assets/architects/Ar.%20Lakshmi%20Govekar.jpg"
+  },
+  {
+    id: "leader-9",
+    name: "Ar. Manish Dikshit",
+    role: "Founding Principal",
+    company: "ADesignStudio",
+    image: "/assets/architects/Ar.%20Manish%20Dikshit.jpg"
+  },
+  {
+    id: "leader-10",
+    name: "Ar. Milind Pai",
+    role: "Principal Architect",
+    company: "Milind Pai Architects",
+    image: "/assets/architects/Ar.%20Milind%20Pai.jpg"
+  },
+  {
+    id: "leader-11",
+    name: "Ar. Prashant Sutaria",
+    role: "Principal Architect",
+    company: "PSA Architects",
+    image: "/assets/architects/Ar.%20Prashant%20Sutaria.jpg"
+  },
+  {
+    id: "leader-12",
+    name: "Ar. Santha Gour",
+    role: "Principal Architect",
+    company: "Planet 3 Studios",
+    image: "/assets/architects/Ar.%20Santha%20Gour.jpg"
+  },
+  {
+    id: "leader-13",
+    name: "Ar. Saurabh Chaterjee",
+    role: "Principal Architect",
+    company: "Spatial Design Associates",
+    image: "/assets/architects/Ar.%20Saurabh%20Chaterjee.jpg"
+  },
+  {
+    id: "leader-14",
+    name: "Ar. Seema Puri",
+    role: "Principal Architect",
+    company: "Seema Puri & Associates",
+    image: "/assets/architects/Ar.%20Seema%20Puri.jpg"
+  },
+  {
+    id: "leader-15",
+    name: "Ar. Sonali Bhagwati",
+    role: "President & Principal",
+    company: "DesignPlus Architecture",
+    image: "/assets/architects/Ar.%20Sonali%20Bhagwati.jpg"
+  },
+  {
+    id: "leader-16",
+    name: "ID. Aakif Habib",
+    role: "Lead Interior Designer",
+    company: "Atelier Aakif",
+    image: "/assets/architects/ID.%20Aakif%20Habib.jpg"
+  },
+  {
+    id: "leader-17",
+    name: "ID. Ketan Sheth",
+    role: "Managing Director",
+    company: "Goldmine Project Consultant",
+    image: "/assets/architects/ID.%20Ketan%20Sheth.jpg"
+  },
+  {
+    id: "leader-18",
+    name: "ID. Neeraj Shah",
+    role: "Principal Interior Designer",
+    company: "Neeraj Shah Design",
+    image: "/assets/architects/ID.%20Neeraj%20Shah.jpg"
+  },
+  {
+    id: "leader-19",
+    name: "ID. Sapana Jain",
+    role: "Design Director",
+    company: "I-Design Studios",
+    image: "/assets/architects/ID.%20Sapana%20Jain.jpg"
+  },
+  {
+    id: "leader-20",
+    name: "ID. Soniya Potdarr",
+    role: "Lead Interior Designer",
+    company: "Studio Poddar",
+    image: "/assets/architects/ID.%20Soniya%20Potdarr.jpg"
   }
 ];
 
@@ -139,7 +245,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     title: "PRINCIPAL ARCHITECT",
     company: "DESIGN MATRIX",
     rating: 5,
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop"
+    avatar: "/assets/architects/Ar.%20Khozema%20Chitalwala.jpg"
   },
   {
     id: "test-2",
@@ -148,7 +254,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     title: "LEAD INTERIOR DESIGNER",
     company: "STUDIO PODDAR",
     rating: 5,
-    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop"
+    avatar: "/assets/architects/ID.%20Soniya%20Potdarr.jpg"
   },
   {
     id: "test-3",

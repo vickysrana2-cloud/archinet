@@ -6,6 +6,32 @@ import { ChevronLeft, ChevronRight, Calendar, MapPin } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { RevealTitle, RevealUp, RevealZoom } from '../animations/ScrollReveal';
 
+function EditionVideo({ src, isCenter }: { src: string; isCenter: boolean }) {
+  const videoRef = React.useRef<HTMLVideoElement>(null);
+
+  React.useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (isCenter) {
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+    }
+  }, [isCenter]);
+
+  return (
+    <video
+      ref={videoRef}
+      src={src}
+      loop
+      muted
+      playsInline
+      className="w-full h-full object-cover transition-transform duration-700 hover:scale-105 pointer-events-none"
+    />
+  );
+}
+
 export default function EditionsSection() {
   const [activeIndex, setActiveIndex] = useState(1); // Default to ITC Kohinoor (index 1)
 
@@ -36,7 +62,7 @@ export default function EditionsSection() {
   };
 
   return (
-    <section id="editions" className="relative z-10 w-full bg-[#050505] text-[#f4f2ed] border-t border-white/[0.06] overflow-hidden">
+    <section id="editions" className="relative z-10 w-full bg-[#050505] text-[#f4f2ed] overflow-hidden">
       
       {/* Main Content Body */}
       <div className="w-full py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex flex-col items-center">
@@ -121,13 +147,9 @@ export default function EditionsSection() {
                         : "w-[70vw] max-w-[285px] sm:w-[460px] lg:w-[350px] xl:w-[360px] bg-[#0a0a0a] border border-white/10 p-3 sm:p-5 hover:opacity-75 z-10 relative"
                     ].join(" ")}
                   >
-                    {/* Image Box (Landscape aspect ratio ~1.5 on desktop matching Screenshot 1) */}
+                    {/* Video Box (Landscape aspect ratio ~1.5 on desktop) */}
                     <div className="relative w-full h-[190px] sm:h-[280px] lg:h-[250px] xl:h-[260px] rounded-xl overflow-hidden bg-black/60">
-                      <img
-                        src={edition.image}
-                        alt={edition.venue}
-                        className="w-full h-full object-cover transition-transform duration-700 hover:scale-105 pointer-events-none"
-                      />
+                      <EditionVideo src={edition.video} isCenter={isCenter} />
                       
                       {/* Bottom-Left Floating Location Badge */}
                       <div className="absolute bottom-3 left-3 z-10 flex items-center gap-1.5 px-3 py-1 bg-[#17140e]/95 border border-[#dcb45e]/50 text-[#dcb45e] rounded-full text-xs font-mono tracking-wider uppercase shadow-md">
@@ -142,7 +164,7 @@ export default function EditionsSection() {
                         {edition.venue}
                       </h3>
 
-                      <div className="flex items-center justify-between mt-2.5 pt-2.5 border-t border-white/[0.08] text-xs sm:text-sm font-sans text-[#a09e97]">
+                      <div className="flex items-center justify-between mt-2.5 pt-2.5  text-xs sm:text-sm font-sans text-[#a09e97]">
                         <span className="truncate">
                           — {edition.city.charAt(0) + edition.city.slice(1).toLowerCase()}, India
                         </span>
