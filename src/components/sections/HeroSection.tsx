@@ -244,7 +244,7 @@ export default function HeroSection({
           MAIN CONTENT
       ========================================================== */}
 
-      <div className="relative z-20 flex min-h-[100svh] items-center justify-center px-6 pb-24 pt-20">
+      <div className="relative z-20 flex min-h-[100svh] flex-col justify-end items-center px-6 pb-16 pt-20">
         <div
           className={[
             "mx-auto flex max-w-[1100px] flex-col items-center text-center",
@@ -254,6 +254,8 @@ export default function HeroSection({
               : "translate-y-0 opacity-100",
           ].join(" ")}
         >
+          {/* Commented out headline as requested */}
+          {/*
           <h1
             className="
               max-w-[1100px]
@@ -267,11 +269,12 @@ export default function HeroSection({
           >
             {activeSlide.title}
           </h1>
+          */}
 
           {activeSlide.subtitle && (
             <p
               className="
-                mt-7
+                mt-4
                 text-[10px]
                 font-semibold
                 uppercase
@@ -289,7 +292,7 @@ export default function HeroSection({
               href={activeSlide.ctaHref || "#"}
               className="
                 group
-                mt-12
+                mt-8
                 inline-flex
                 h-[56px]
                 min-w-[285px]
@@ -316,81 +319,6 @@ export default function HeroSection({
           )}
         </div>
       </div>
-
-      {/* =========================================================
-          BOTTOM SLIDER INDICATORS
-      ========================================================== */}
-
-      {slides.length > 1 && (
-        <div className="absolute bottom-[115px] left-1/2 z-30 flex -translate-x-1/2 items-center gap-5">
-          {slides.map((slide, index) => (
-            <button
-              key={slide.id}
-              type="button"
-              onClick={() => goToSlide(index)}
-              aria-label={`Go to slide ${index + 1}`}
-              aria-current={index === activeIndex}
-              className="group flex h-5 items-center"
-            >
-              <span
-                className={[
-                  "block h-[2px] transition-all duration-500",
-                  index === activeIndex
-                    ? "w-[54px] bg-[#f4f0e8]"
-                    : "w-[34px] bg-white/35 group-hover:bg-white/70",
-                ].join(" ")}
-              />
-            </button>
-          ))}
-        </div>
-      )}
-
-      {/* =========================================================
-          SCROLL DOWN
-      ========================================================== */}
-
-      <button
-        type="button"
-        onClick={() => {
-          const nextSection =
-            document.querySelector("#event") ||
-            document.querySelector("main > section:nth-child(2)");
-
-          nextSection?.scrollIntoView({
-            behavior: "smooth",
-          });
-        }}
-        className="
-          absolute
-          bottom-8
-          left-1/2
-          z-30
-          flex
-          -translate-x-1/2
-          flex-col
-          items-center
-          gap-2
-          text-white
-        "
-        aria-label="Scroll down"
-      >
-        <ArrowDown
-          size={16}
-          strokeWidth={1.5}
-          className="animate-bounce"
-        />
-
-        <span
-          className="
-            text-[9px]
-            font-semibold
-            uppercase
-            tracking-[0.14em]
-          "
-        >
-          Scroll Down
-        </span>
-      </button>
 
       {/* =========================================================
           MOBILE NAVIGATION

@@ -78,9 +78,9 @@ export default function HeroSectionVideo() {
       </motion.div>
 
       {/* =========================================================
-          MAIN HERO CONTENT
+          MAIN HERO CONTENT AT BOTTOM
       ========================================================== */}
-      <div className="relative z-20 flex min-h-[100svh] w-full max-w-[1280px] items-center justify-center px-6 pb-24 pt-24 text-center">
+      <div className="relative z-20 flex min-h-[100svh] w-full max-w-[1280px] flex-col justify-end items-center px-6 pb-16 pt-24 text-center">
         <div className="mx-auto flex max-w-[1100px] flex-col items-center">
           {/* Eyebrow / Tagline for Mobile & Tablet: Slide DOWN from top */}
           <motion.div
@@ -95,7 +95,8 @@ export default function HeroSectionVideo() {
             </span>
           </motion.div>
 
-          {/* Main Editorial Headline: Slide IN from Left */}
+          {/* Commented out "Where Visionaries Meet" headline as requested */}
+          {/* 
           <motion.h1
             initial={{ opacity: 0, x: -60 }}
             animate={{ opacity: 1, x: 0 }}
@@ -113,14 +114,15 @@ export default function HeroSectionVideo() {
           >
             Where Visionaries Meet
           </motion.h1>
+          */}
 
-          {/* Supporting Text: Slide UP from bottom */}
+          {/* Supporting Text at Bottom */}
           <motion.p
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.45, ease: CUBIC_EASE }}
             className="
-              mt-7
+              mt-4
               max-w-[800px]
               text-[10px]
               font-semibold
@@ -135,10 +137,10 @@ export default function HeroSectionVideo() {
 
           {/* Primary Call to Action Button: Slide IN from Right */}
           <motion.div
-            initial={{ opacity: 0, x: 60 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6, ease: CUBIC_EASE }}
-            className="mt-12"
+            className="mt-8"
           >
             <Link
               href="#contact"
@@ -178,39 +180,6 @@ export default function HeroSectionVideo() {
           </motion.div>
         </div>
       </div>
-
-      {/* =========================================================
-          SCROLL DOWN INDICATOR — Scale & Zoom UP
-      ========================================================== */}
-      <motion.button
-        type="button"
-        onClick={scrollToNext}
-        initial={{ opacity: 0, scale: 0.85 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, delay: 0.8, ease: CUBIC_EASE }}
-        className="
-          absolute
-          bottom-8
-          left-1/2
-          z-30
-          flex
-          -translate-x-1/2
-          flex-col
-          items-center
-          gap-2
-          text-white/80
-          transition-colors
-          duration-300
-          hover:text-[#dcb45e]
-          focus:outline-none
-        "
-        aria-label="Scroll to next section"
-      >
-        <ArrowDown size={16} strokeWidth={1.5} className="animate-bounce text-[#dcb45e]" />
-        <span className="text-[9px] font-semibold uppercase tracking-[0.18em]">
-          Scroll Down
-        </span>
-      </motion.button>
     </section>
   );
 }

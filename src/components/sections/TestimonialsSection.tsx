@@ -7,34 +7,34 @@ import { RevealTitle, RevealLeft, RevealRight, RevealZoom } from '../animations/
 
 const TESTIMONIAL_VIDEOS = [
   {
-    id: 'reel-1',
-    label: 'VIDEO 01',
-    title: 'Attendee Testimonial Video 1',
-    instagramUrl: 'https://www.instagram.com/reel/DBniDsbNyxm/',
+    id: 'vid-canna-patel',
+    label: 'AR. CANNA PATEL',
+    title: 'Ar. Canna Patel Testimonial',
+    src: '/assets/testimonials videos/AR. Canna Patel_.mp4',
   },
   {
-    id: 'reel-2',
-    label: 'VIDEO 02',
-    title: 'Attendee Testimonial Video 2',
-    instagramUrl: 'https://www.instagram.com/reel/DNx87YjZGsw/',
+    id: 'vid-reza-kabul',
+    label: 'AR. REZA KABUL',
+    title: 'Ar. Reza Kabul Testimonial',
+    src: '/assets/testimonials videos/AR. Reza Kabul.mp4',
   },
   {
-    id: 'reel-3',
-    label: 'VIDEO 03',
-    title: 'Attendee Testimonial Video 3',
-    instagramUrl: 'https://www.instagram.com/reel/DBf7A2rAF7H/',
+    id: 'vid-santha-gour',
+    label: 'AR. SANTHA GOUR',
+    title: 'Ar. Santha Gour Testimonial',
+    src: '/assets/testimonials videos/AR. Santha Gour.mp4',
   },
   {
-    id: 'reel-4',
-    label: 'VIDEO 04',
-    title: 'Attendee Testimonial Video 4',
-    instagramUrl: 'https://www.instagram.com/reel/DBfo7m1gMQo/',
+    id: 'vid-seema-puri',
+    label: 'AR. SEEMA PURI',
+    title: 'Ar. Seema Puri Testimonial',
+    src: '/assets/testimonials videos/AR. Seema Puri.mp4',
   },
   {
-    id: 'reel-5',
-    label: 'VIDEO 05',
-    title: 'Attendee Testimonial Video 5',
-    instagramUrl: 'https://www.instagram.com/reel/DBfprVzAK6O/',
+    id: 'vid-aakif-habib',
+    label: 'ID. AAKIF HABIB',
+    title: 'Id. Aakif Habib Testimonial',
+    src: '/assets/testimonials videos/ID. Aakif Habib.mp4',
   },
 ];
 
@@ -58,24 +58,6 @@ export default function TestimonialsSection() {
     return () => window.removeEventListener('resize', updateStep);
   }, []);
 
-  // Load Instagram Embed Script once
-  useEffect(() => {
-    if (!document.getElementById('instagram-embed-script')) {
-      const script = document.createElement('script');
-      script.id = 'instagram-embed-script';
-      script.src = 'https://www.instagram.com/embed.js';
-      script.async = true;
-      document.body.appendChild(script);
-    }
-  }, []);
-
-  // Re-process Instagram embeds when active Reel changes
-  useEffect(() => {
-    if (typeof window !== 'undefined' && (window as any).instgrm?.Embeds) {
-      (window as any).instgrm.Embeds.process();
-    }
-  }, [activeVideoIndex]);
-
   const goToSlide = (index: number) => {
     setActiveIndex(index);
   };
@@ -91,7 +73,6 @@ export default function TestimonialsSection() {
   const extendedDesktopData = [...TESTIMONIALS_DATA, TESTIMONIALS_DATA[0]];
 
   const currentVid = TESTIMONIAL_VIDEOS[activeVideoIndex];
-  const embedIframeUrl = `${currentVid.instagramUrl.replace(/\/$/, '')}/embed`;
 
   return (
     <section
@@ -101,7 +82,7 @@ export default function TestimonialsSection() {
       <div className="grid min-h-[720px] w-full grid-cols-1 lg:grid-cols-2">
 
         {/* =========================================================
-            LEFT — 50% INSTAGRAM REELS EMBED PLAYER (Enters from Left)
+            LEFT — 50% DIRECT MP4 VIDEO PLAYER (Enters from Left)
         ========================================================= */}
         <RevealLeft
           className="
@@ -120,15 +101,20 @@ export default function TestimonialsSection() {
             sm:p-6
           "
         >
-          {/* Instagram Reel Container */}
+          {/* Local Video Player Container */}
           <div className="relative w-full max-w-[350px] h-[480px] sm:h-[540px] lg:h-[600px] rounded-2xl overflow-hidden border border-[#dcb45e]/35 shadow-[0_0_35px_rgba(220,180,94,0.15)] bg-black flex items-center justify-center">
-            <iframe
+            <video
               key={currentVid.id}
-              src={embedIframeUrl}
-              title={currentVid.title}
-              className="w-full h-full border-0 pointer-events-auto"
-              allow="encrypted-media; clipboard-write; picture-in-picture; web-share"
-            />
+              controls
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover rounded-2xl"
+            >
+              <source src={currentVid.src} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
 
           {/* Floating Video Switcher Bar */}
